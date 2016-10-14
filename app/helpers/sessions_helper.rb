@@ -51,5 +51,12 @@ module SessionsHelper
 		session[:forwarding_url] = request.original_url if request.get?
 	end
 
+	def signed_in_user
+		unless signed_in?
+			store_location
+			flash[:danger] = "Please sign in first!"
+			redirect_to signin_url
+		end
+	end	
 
 end
