@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :signed_in_user
+	before_filter :signed_in_user, only: [:show]
 	# before_filter :correct_user, only: [:edit, :update]
 	def new
 		@user = User.new
