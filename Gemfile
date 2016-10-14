@@ -6,6 +6,8 @@ gem 'rails', '5.0.0.1'
 # bootstrap is for nice css and javascript
 gem 'bootstrap-sass', '3.3.6'
 # Use Puma as the app server
+gem 'bcrypt',         '3.1.11'
+#use bcrypt make password digests
 gem 'puma', '3.6.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '5.0.6'
