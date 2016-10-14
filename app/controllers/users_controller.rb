@@ -1,11 +1,7 @@
 class UsersController < ApplicationController
-<<<<<<< HEAD
 	before_action :signed_in_user, only: [:edit, :update]
-	before_action :correct_user, only: [:edit, :update]
-=======
-	before_filter :signed_in_user, only: [:show]
-	# before_filter :correct_user, only: [:edit, :update]
->>>>>>> 24268e3c78fdcffd2bf081ea7c7c087e5a2b9c37
+	before_action :correct_user, only: [:edit, :update, :show]
+
 	def new
 		@user = User.new
 	end
