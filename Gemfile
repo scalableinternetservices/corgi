@@ -29,6 +29,8 @@ gem 'jbuilder', '2.6.0'
 gem 'will_paginate', '3.1.3'
 gem 'bootstrap-will_paginate', '0.0.10'
 
+gem 'sqlite3', '1.3.12'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 # Use Redis adapter to run Action Cable in production
@@ -40,7 +42,6 @@ gem 'bootstrap-will_paginate', '0.0.10'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
-  gem 'sqlite3', '1.3.12'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '9.0.6', platform: :mri
 end
