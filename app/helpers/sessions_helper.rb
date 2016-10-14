@@ -42,10 +42,14 @@ module SessionsHelper
 		@current_user = nil
 	end
 
-	def signed_in_user
-	    unless signed_in?
-	      redirect_to signin_path, notice: "Please sign in." 
-	    end
-	  end
+	def redirect_back_or(url)
+		redirect_to(session[:forwarding_url] || url)
+		session.delete(:forwarding_url)
+	end
+
+	def store_location
+		session[:forwarding_url] = request.original_url if request.get?
+	end
+
 
 end

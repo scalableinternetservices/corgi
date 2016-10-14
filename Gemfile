@@ -10,6 +10,10 @@ gem 'bcrypt',         '3.1.11'
 #use bcrypt make password digests
 gem 'puma', '3.6.0'
 # Use SCSS for stylesheets
+gem 'faker',          '1.6.6'
+
+
+
 gem 'sass-rails', '5.0.6'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '3.0.2'
