@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-10.times do |n|
+20.times do |n|
   name  = "User #{n+1}"
   email = "user-#{n+1}@gmail.com"
   password = "password"
@@ -26,3 +26,11 @@ users = User.order(:created_at)
                             description: description)
   end
 end
+
+# Following relationships
+users = User.all
+user  = users.first
+following = users[2..20]
+followers = users[3..12]
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }
