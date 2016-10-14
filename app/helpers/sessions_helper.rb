@@ -28,6 +28,10 @@ module SessionsHelper
 		end
 	end
 
+	def current_user?(user)
+    	user == current_user
+  	end
+
 	def signed_in?
 		!current_user.nil?
 	end
@@ -37,5 +41,11 @@ module SessionsHelper
 		session.delete(:user_id)
 		@current_user = nil
 	end
+
+	def signed_in_user
+	    unless signed_in?
+	      redirect_to signin_path, notice: "Please sign in." 
+	    end
+	  end
 
 end
