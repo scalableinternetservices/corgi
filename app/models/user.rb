@@ -57,4 +57,8 @@ class User < ApplicationRecord
     def following?(other_user)
         following.include?(other_user)
     end
+
+    def feed
+        Event.from_users_followed_by(self)
+    end
 end
