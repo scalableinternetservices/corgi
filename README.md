@@ -1,24 +1,18 @@
 # README
+UCLA Events
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+App for keeping track of of events between friends.
 
-Things you may want to cover:
+Team Members:
+Vivek Sivakumar ([@vivek](https://github.com/vivsiv))  
+![vivek photo](https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAL4AAAAJDZlM2Y2ZTllLWRmNWMtNGQyNi1hYmU3LWJmZGI5ZTg4YmI1ZA.jpg)
 
-* Ruby version
+Team Members:
+Xin Xu ([@caraxin](https://github.com/caraxin))  
 
-* System dependencies
+Team Members:
+Gene Shaffer ([@amutz](https://github.com/genelikespie))  
+![gene photo](https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAlCAAAAJDg2YTg0ZDMzLWRjNTctNDQzYS04NzE3LTRhODM0Mzc5YzlkNA.jpg)
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Team Members:
+Stephen Link ([@stephenl](https://github.com/stephenl))  
