@@ -31,7 +31,7 @@ gem 'bootstrap-will_paginate', '0.0.10'
 
 gem 'sqlite3', '1.3.12'
 
-gem 'json'
+gem 'json', '1.8.2'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
