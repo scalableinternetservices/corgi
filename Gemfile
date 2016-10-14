@@ -26,6 +26,9 @@ gem 'jquery-rails', '4.2.1'
 gem 'turbolinks', '5.0.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '2.6.0'
+# For pagination
+gem 'will_paginate', '3.1.3'
+gem 'bootstrap-will_paginate', '0.0.10'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
