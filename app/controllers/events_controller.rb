@@ -3,7 +3,8 @@ class EventsController < ApplicationController
 	before_filter :correct_user, only: :destroy
 
 	def create
-		@event = current_user.events.build(event_params)
+		@event = current_user.events.build(event_params) 
+		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")}
 		if @event.save
 			flash[:success] = "Event Created!"
 			redirect_to current_user
