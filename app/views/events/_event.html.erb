@@ -2,7 +2,35 @@
   <%= link_to gravatar_for(event.user), event.user %>
   <span class="user"><%= link_to event.user.name, event.user %></span>
   <span class="content"><%= event.date %></span>
-  <span class="content"><%= event.location %></span>
+  <div class="content" id="link"><%= event.location %></div>
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    See in Google map
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <span><%= event.latitude %>, <%= event.longitude %></span>
+        <div class="modal-body">
+          <!-- <div id="mapCanvas" style="width: 640px; height: 400px"></div>  -->
+          <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?center=#{event.latitude},#{event.longitude}&zoom=16&size=550x400&markers=color:blue%7clabel:S%7c#{event.latitude},#{event.longitude}&path=weight:3%7Ccolor:blue%7Cenc:{coaHnetiVjM??_SkM??~R&key=AIzaSyCp2SxzPnilWMAFfvo3QTr-EBCobz_dh6Y" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
   <span class="content"><%= event.description %></span>
    <span class="content"><%= event.tag_list %></span>
   <span class="timestamp">

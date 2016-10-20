@@ -1,5 +1,6 @@
 <h1>New Event</h1>
 
+
 <%= form_for(@event) do |f| %>
   <%= render 'shared/error_messages', object: @event %>
   <div class="field">
@@ -11,6 +12,7 @@
   	
   	<%= f.label :description %>
     <%= f.text_area :description %>
+
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>
 <% end %>

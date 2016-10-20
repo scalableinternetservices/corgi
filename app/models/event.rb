@@ -1,5 +1,9 @@
 class Event < ApplicationRecord
   belongs_to :user
+  #location is geocoded
+  geocoded_by :location
+  after_validation :geocode
+
   default_scope -> { order(created_at: :desc)}
   validates :user_id, presence: true
   validates :date, presence: true

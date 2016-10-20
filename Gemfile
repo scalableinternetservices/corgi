@@ -12,7 +12,9 @@ gem 'puma', '3.6.0'
 # Use SCSS for stylesheets
 gem 'faker',          '1.6.6'
 
+gem 'gmaps4rails'
 
+gem 'geocoder'
 
 gem 'sass-rails', '5.0.6'
 # Use Uglifier as compressor for JavaScript assets
