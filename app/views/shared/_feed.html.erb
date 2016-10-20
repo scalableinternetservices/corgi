@@ -1,4 +1,8 @@
+<%= render partial: 'shared/search_form' %>
 <% if @feed_items.any? %>
+  <% unless @search_query.nil? %>
+  	<p>Searched: <%= @search_query %></p>
+  <% end %>
   <ol class="events">
     <%= render partial: 'shared/feed_item', collection: @feed_items %>
   </ol>

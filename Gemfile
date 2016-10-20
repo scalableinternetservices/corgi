@@ -33,6 +33,10 @@ gem 'bootstrap-will_paginate', '0.0.10'
 
 gem 'sqlite3', '1.3.12'
 
+gem 'json', '1.8.2'
+
+gem 'acts-as-taggable-on', '4.0.0'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 # Use Redis adapter to run Action Cable in production

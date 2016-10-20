@@ -8,6 +8,7 @@ class Event < ApplicationRecord
   validates :user_id, presence: true
   validates :date, presence: true
   validates :location, presence: true
+  acts_as_taggable_on :tags
 
   def self.from_users_followed_by(user)
     followed_user_ids = "SELECT followed_id FROM relationships
