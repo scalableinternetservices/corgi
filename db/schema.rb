@@ -12,7 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20161019192520) do
 
-
   create_table "events", force: :cascade do |t|
     t.datetime "date"
     t.text     "location"
@@ -22,7 +21,7 @@ ActiveRecord::Schema.define(version: 20161019192520) do
     t.datetime "updated_at",  null: false
     t.float    "latitude"
     t.float    "longitude"
-    t.index ["user_id", "date", "location", "created_at"], name: "index_events_on_user_id_and_date_and_location_and_created_at"
+    t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
