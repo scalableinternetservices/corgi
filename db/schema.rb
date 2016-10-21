@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20161021072028) do
     t.datetime "updated_at",  null: false
     t.float    "latitude"
     t.float    "longitude"
-    t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
+    t.index ["user_id", "date", "location", "created_at"], name: "index_events_on_user_id_and_date_and_location_and_created_at"
     t.index ["user_id"], name: "index_events_on_user_id"
   end
 
@@ -73,10 +73,15 @@ ActiveRecord::Schema.define(version: 20161021072028) do
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "password_digest"
     t.string   "remember_digest"
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
+    t.string   "background"
     t.string   "user_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["user_name"], name: "index_users_on_user_name", unique: true
