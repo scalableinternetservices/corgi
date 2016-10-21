@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   end
   resources :events, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :invites, only: [:create, :destroy]
 
 end
