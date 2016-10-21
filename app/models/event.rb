@@ -4,6 +4,11 @@ class Event < ApplicationRecord
   geocoded_by :location
   after_validation :geocode
 
+  has_many :guest_relationships, class_name: "Invite",
+                                  foreign_key: "event_id",
+                                  dependent: :destroy
+  has_many :guests, through: :guest_relationships
+
   default_scope -> { order(created_at: :desc)}
   validates :user_id, presence: true
   validates :date, presence: true

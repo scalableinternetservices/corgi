@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021024907) do
+ActiveRecord::Schema.define(version: 20161021072028) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "date"
@@ -21,8 +21,18 @@ ActiveRecord::Schema.define(version: 20161021024907) do
     t.datetime "updated_at",  null: false
     t.float    "latitude"
     t.float    "longitude"
-    t.index ["user_id", "date", "location", "created_at"], name: "index_events_on_user_id_and_date_and_location_and_created_at"
+    t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
     t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "invites", force: :cascade do |t|
+    t.integer  "guest_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_invites_on_event_id"
+    t.index ["guest_id", "event_id"], name: "index_invites_on_guest_id_and_event_id", unique: true
+    t.index ["guest_id"], name: "index_invites_on_guest_id"
   end
 
   create_table "relationships", force: :cascade do |t|

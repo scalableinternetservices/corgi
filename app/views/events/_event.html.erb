@@ -27,17 +27,28 @@
     </div>
   </div>
 
-
-
-
-
   <span class="content"><%= event.description %></span>
    <span class="content"><%= event.tag_list %></span>
   <span class="timestamp">
     Created <%= time_ago_in_words(event.created_at) %> ago.
   </span>
+  <span class="content"><%= event.guests.count %> Attending</span>
+
+
   <% if current_user?(event.user) %>
     <%= link_to "delete", event, method: :delete,
                                      confirm: "You sure?" %>
+  <% else %>
+    <% if current_user.guest?(event) %>
+      <%= form_for(current_user.invite_relationships.find_by(event_id: event.id),
+               html: { method: :delete }) do |f| %>
+          <%= f.submit "Leave", class: "btn" %>
+      <% end %>
+    <% else %>
+      <%= form_for(current_user.invite_relationships.build) do |f| %>
+        <div><%= hidden_field_tag :event_id, event.id %></div>
+        <%= f.submit "Join", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
   <% end %>
 </li>

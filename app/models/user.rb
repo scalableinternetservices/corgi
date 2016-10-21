@@ -12,6 +12,11 @@ class User < ApplicationRecord
                                      dependent: :destroy
     has_many :followers, through: :passive_relationships, source: :follower
 
+    has_many :invite_relationships, class_name: "Invite",
+                                  foreign_key: "guest_id",
+                                  dependent: :destroy
+    has_many :invites, through: :invite_relationships, source: :event
+
 	
 	before_save { self.email = email.downcase }
 
@@ -61,5 +66,17 @@ class User < ApplicationRecord
 
     def feed
         Event.from_users_followed_by(self)
+    end
+
+    def join(event)
+        invite_relationships.create(event_id: event.id)
+    end
+
+    def leave(event)
+        invite_relationships.find_by(event_id: event.id).destroy
+    end
+
+    def guest?(event)
+        invites.include?(event)
     end
 end
