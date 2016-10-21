@@ -12,10 +12,16 @@ class User < ApplicationRecord
                                      dependent: :destroy
     has_many :followers, through: :passive_relationships, source: :follower
 
+    has_many :invite_relationships, class_name: "Invite",
+                                  foreign_key: "guest_id",
+                                  dependent: :destroy
+    has_many :invites, through: :invite_relationships, source: :event
+
 	
 	before_save { self.email = email.downcase }
 
 	validates :name,  presence: true, length: { maximum: 50 }
+    validates :user_name, presence: true, length: { minimum: 4, maximum: 15 }
   	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   	validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
@@ -60,5 +66,17 @@ class User < ApplicationRecord
 
     def feed
         Event.from_users_followed_by(self)
+    end
+
+    def join(event)
+        invite_relationships.create(event_id: event.id)
+    end
+
+    def leave(event)
+        invite_relationships.find_by(event_id: event.id).destroy
+    end
+
+    def guest?(event)
+        invites.include?(event)
     end
 end

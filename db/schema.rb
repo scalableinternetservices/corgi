@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014054452) do
+ActiveRecord::Schema.define(version: 20161021072028) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "date"
@@ -19,8 +19,20 @@ ActiveRecord::Schema.define(version: 20161014054452) do
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["user_id", "date", "location", "created_at"], name: "index_events_on_user_id_and_date_and_location_and_created_at"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
     t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "invites", force: :cascade do |t|
+    t.integer  "guest_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_invites_on_event_id"
+    t.index ["guest_id", "event_id"], name: "index_invites_on_guest_id_and_event_id", unique: true
+    t.index ["guest_id"], name: "index_invites_on_guest_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -33,6 +45,31 @@ ActiveRecord::Schema.define(version: 20161014054452) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "tag_id"
+    t.string   "taggable_type"
+    t.integer  "taggable_id"
+    t.string   "tagger_type"
+    t.integer  "tagger_id"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -40,7 +77,9 @@ ActiveRecord::Schema.define(version: 20161014054452) do
     t.datetime "updated_at",      null: false
     t.string   "password_digest"
     t.string   "remember_digest"
+    t.string   "user_name"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
 end

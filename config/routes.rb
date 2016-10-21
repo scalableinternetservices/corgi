@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get '/', to: 'pages#home'
   get '/help', to: 'pages#help'
   get '/about', to: 'pages#about'
+  post '/search', to: 'pages#search'
   get '/signup', to: 'users#new'
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
@@ -16,5 +17,6 @@ Rails.application.routes.draw do
   end
   resources :events, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :invites, only: [:create, :destroy]
 
 end
