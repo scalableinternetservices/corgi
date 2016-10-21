@@ -7,9 +7,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 20.times do |n|
   name  = "User #{n+1}"
+  user_name = "user#{n+1}"
   email = "user-#{n+1}@gmail.com"
   password = "password"
   User.create!(name:  name,
+               user_name: user_name,
                email: email,
                password:              password,
                password_confirmation: password)
