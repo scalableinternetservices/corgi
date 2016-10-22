@@ -1,0 +1,26 @@
+<% provide(:title, "Edit Event") %>
+<h1>Update Event</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@event) do |f| %>
+      <%= render 'shared/error_messages', object: @event %>
+
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
+
+      <%= f.label :date %>
+      <%= f.date_field :date, class: 'form-control' %>
+
+      <%= f.label :location %>
+      <%= f.text_area :location, class: 'form-control' %>
+
+      <%= f.label :description %>
+      <%= f.text_area :description, class: 'form-control' %>
+
+     <%= hidden_field_tag :user_id, @event.user.id %>
+
+      <%= f.submit "Save changes", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

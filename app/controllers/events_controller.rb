@@ -23,9 +23,25 @@ class EventsController < ApplicationController
 		@event = Event.find(params[:id])
 	end
 
+	def edit
+		@event = Event.find(params[:id])
+	end
+
+	def update
+		@event = Event.find(params[:id])
+		ep = event_params
+		ep[:tag_list] = ep[:description].split(" ").select {|word| word.start_with?("#")}
+		if @event.update(ep)
+			flash[:success] = "Event change successfully"
+			redirect_to @event
+		else
+			render 'edit'
+		end
+	end
+
 	private
 	  	def event_params
-	    	params.require(:event).permit(:user, :date, :location,
+	    	params.require(:event).permit(:title, :user, :date, :location,
 	                                   :description, :tag_list)
 	  	end
 

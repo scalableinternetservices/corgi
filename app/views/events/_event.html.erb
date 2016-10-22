@@ -1,5 +1,6 @@
 <li id="event-<%= event.id %>">
   <%= link_to gravatar_for(event.user), event.user %>
+  <span class="user"><%= event.title %></span>
   <span class="user"><%= link_to event.user.name, event.user %></span>
   <span class="content"><%= event.date %></span>
   <div class="content" id="link"><%= event.location %></div>
@@ -36,6 +37,7 @@
 
 
   <% if current_user?(event.user) %>
+    <%= link_to "edit", edit_event_path(event) %>
     <%= link_to "delete", event, method: :delete,
                                      confirm: "You sure?" %>
   <% else %>
