@@ -10,6 +10,7 @@ class Event < ApplicationRecord
   has_many :guests, through: :guest_relationships
 
   default_scope -> { order(created_at: :desc)}
+  validates :title,  presence: true, length: { maximum: 20 }
   validates :user_id, presence: true
   validates :date, presence: true
   validates :location, presence: true

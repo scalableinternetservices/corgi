@@ -19,13 +19,15 @@ end
 
 users = User.order(:created_at)
 5.times do |n|
+  title = "Fake Event #{n+1}"
   date = DateTime.now
-  description = "Fake description #{n+1}"
+  description = "Fake description #{n+1} #fake"
   location = "Fake location #{n+1}"
   users.each do |user| 
-    user.events.create!(date: date,
-                            location: location,
-                            description: description)
+    user.events.create!(title: title,
+                        date: date,
+                        location: location,
+                        description: description)
   end
 end
 

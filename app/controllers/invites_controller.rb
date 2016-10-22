@@ -4,12 +4,12 @@ class InvitesController < ApplicationController
 	def create
 		event = Event.find(params[:event_id])
 	    current_user.join(event)
-	    redirect_to current_user
+	    redirect_to event
 	end
 
 	def destroy
 	    event = Invite.find(params[:id]).event
 	    current_user.leave(event)
-	    redirect_to current_user
+	    redirect_to '/'
 	end
 end
