@@ -10,7 +10,7 @@ class EventsController < ApplicationController
 			redirect_to current_user
 		else
 			render 'pages/home'
-
+			#redirect_to root_path
 		end
 	end
 

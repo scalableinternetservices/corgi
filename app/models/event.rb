@@ -22,4 +22,14 @@ class Event < ApplicationRecord
     where("user_id IN (#{followed_user_ids}) OR user_id = :user_id", 
           user_id: user.id)
   end
+
+  def self.from_users_friend(user)
+    friend_user_ids = "SELECT A.followed_id
+                       FROM relationships A
+                       WHERE A.follower_id = :user_id
+                       AND EXISTS 
+                       (SELECT * FROM relationships B
+                       WHERE B.follower_id = A.followed_id AND B.followed_id = :user_id)"
+    where("user_id IN (#{friend_user_ids})", user_id: user.id)
+  end
 end

@@ -7,6 +7,30 @@
   </span>
   <span class="content"><%= feed_item.date %></span>
   <span class="content"><%= feed_item.location %></span>
+
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal-<%= feed_item.id %>">
+    See in Google map
+  </button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal-<%= feed_item.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <span><%= feed_item.latitude %>, <%= feed_item.longitude %></span>
+        <div class="modal-body">
+          <!-- <div id="mapCanvas" style="width: 640px; height: 400px"></div>  -->
+          <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?center=#{feed_item.latitude},#{feed_item.longitude}&zoom=16&size=550x400&markers=color:blue%7clabel:S%7c#{feed_item.latitude},#{feed_item.longitude}&path=weight:3%7Ccolor:blue%7Cenc:{coaHnetiVjM??_SkM??~R&key=AIzaSyCp2SxzPnilWMAFfvo3QTr-EBCobz_dh6Y" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <span class="content"><%= feed_item.description %></span>
   <span class="content"><%= feed_item.tag_list %></span>
   <span class="timestamp">
