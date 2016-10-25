@@ -34,7 +34,7 @@ class Event < ApplicationRecord
     followed_user_ids = "SELECT followed_id FROM relationships
                          WHERE follower_id = :user_id"         #the users the user follow
 
-    where("(isprivate = 0 AND user_id IN (#{followed_user_ids})) OR user_id = :user_id", 
+    where("(isprivate = 0 AND user_id IN (#{followed_user_ids}))", 
           user_id: user.id)
   end 
 
@@ -43,7 +43,7 @@ class Event < ApplicationRecord
                         WHERE friend_b = :user_id"
     friendb_user_ids = "SELECT friend_b FROM friends
                         WHERE friend_a = :user_id"
-    where("(user_id IN (#{frienda_user_ids}) OR user_id IN (#{friendb_user_ids}))", user_id: user.id)
+    where("(user_id IN (#{frienda_user_ids}) OR user_id IN (#{friendb_user_ids})) OR user_id = :user_id", user_id: user.id)
   end
 
   def self.from_users_followed_by(user)

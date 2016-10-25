@@ -88,6 +88,10 @@ class User < ApplicationRecord
         where("id IN (#{frienda_ids}) OR id IN (#{friendb_ids})", user_id: user.id)
     end
 
+    def isfriend?(user) 
+        Friend.exists?(friend_a: self.id, friend_b: user.id) || Friend.exists?(friend_a: user.id, friend_b: self.id)
+    end
+
     def feed
         Event.public_events_from_followings(self).or(Event.all_events_from_friends(self))
         #Event.from_users_followed_by(self)
