@@ -11,6 +11,13 @@ class User < ApplicationRecord
                                      foreign_key: "followed_id",
                                      dependent: :destroy
     has_many :followers, through: :passive_relationships, source: :follower
+=begin
+    has_many :friendship_bs, class_name: "Friend",
+                             foreign_key: "friend_b",
+                             dependent: :destroy
+    has_many :friend_as, through: :friendship_bs, source: :friend_a
+
+=end
 
     has_many :invite_relationships, class_name: "Invite",
                                   foreign_key: "guest_id",
@@ -54,18 +61,36 @@ class User < ApplicationRecord
 
     def follow(other_user)
         active_relationships.create(followed_id: other_user.id)
+        if other_user.following?(self)
+            #add friendship
+            Friend.create(friend_a: self.id, friend_b: other_user.id)
+        end
     end
 
     def unfollow(other_user)
         active_relationships.find_by(followed_id: other_user.id).destroy
+        #destroy friend
+        if other_user.following?(self)
+            Friend.find_by(friend_a: self.id, friend_b: other_user.id).destroy
+            Friend.find_by(friend_a: other_user.id, friend_b: self.id).destroy
+        end
     end
 
     def following?(other_user)
         following.include?(other_user)
     end
 
+    def self.friends(user)
+        frienda_ids = "SELECT friend_a FROM friends
+                       WHERE friend_b = :user_id"
+        friendb_ids = "SELECT friend_b FROM friends
+                       WHERE friend_a = :user_id"
+        where("id IN (#{frienda_ids}) OR id IN (#{friendb_ids})", user_id: user.id)
+    end
+
     def feed
-        Event.from_users_followed_by(self)
+        Event.public_events_from_followings(self).or(Event.all_events_from_friends(self))
+        #Event.from_users_followed_by(self)
     end
 
     def join(event)

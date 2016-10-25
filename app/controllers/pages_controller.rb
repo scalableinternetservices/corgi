@@ -23,10 +23,12 @@ class PagesController < ApplicationController
 
   def friend
     if signed_in?
-      @temp = Event.from_users_friend(current_user)
-      @temp.sort_by{|e| e.created_at}
-      @friend_events = @temp.paginate(page: params[:page])
       @user = current_user
+      @friends = User.friends(@user)
+      #@temp = Event.from_users_friend(current_user)
+      #@temp.sort_by{|e| e.created_at}
+      #@friend_events = @temp.paginate(page: params[:page])
+      #@user = current_user
       #render 'pages/friend'
     end
   end

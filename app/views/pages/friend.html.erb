@@ -11,12 +11,13 @@
   </aside>
 
   <div class="col-md-9">
-    <% if @friend_events %>
-      <% if @friend_events.any? %>
-        <ol class="events">
-          <%= render @friend_events %>
-        </ol>
-        <%= will_paginate @friend_events %>
+    <% if @friends %>
+      <% if @friends.any? %>
+        <% @friends.each do |f|%>
+          <ul>
+            <li><%= f.id %></li>
+          </ul>
+        <% end%>
       <% end %>
     <% end %>
   </div>

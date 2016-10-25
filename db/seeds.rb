@@ -27,7 +27,8 @@ users = User.order(:created_at)
     user.events.create!(title: title,
                         date: date,
                         location: location,
-                        description: description)
+                        description: description,
+                        isprivate: 0)
   end
 end
 

@@ -6,6 +6,7 @@
     <%= link_to feed_item.user.user_name, feed_item.user %>
   </span>
   <span class="content"><%= feed_item.date %></span>
+  <!--<span class="private"><%= feed_item.isprivate %></span> -->
   <span class="content"><%= feed_item.location %></span>
 
   <!-- Button trigger modal -->
@@ -30,6 +31,8 @@
       </div>
     </div>
   </div>
+
+  
 
   <span class="content"><%= feed_item.description %></span>
   <span class="content"><%= feed_item.tag_list %></span>
