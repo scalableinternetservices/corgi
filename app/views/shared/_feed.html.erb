@@ -1,10 +1,51 @@
-<%= render partial: 'shared/search_form' %>
-<% if @feed_items.any? %>
-  <% unless @search_query.nil? %>
-  	<p>Searched: <%= @search_query %></p>
+<div class="feed-items-wrapper row">
+  <%= render partial: 'shared/search_form' %>
+  <% if @feed_items.any? %>
+  	<% unless @search_query.nil? %>
+  		<p>Searched: <%= @search_query %></p>
+    <% end %>
+	<% @feed_items.each do |feed_item| %>
+	    <div class="feed-item">
+	      <div class="feed-item-head">
+	      	<div class="name">
+	        	<%= feed_item.title %> 
+	        </div>
+	        <div class="name">
+	        	<%= feed_item.user.user_name %>
+	        	(<%= time_ago_in_words(feed_item.created_at) %>)
+	        </div>
+	      </div>
+	      <div class="map center-block">
+	        <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?center=#{feed_item.latitude},#{feed_item.longitude}&zoom=16&size=550x400&markers=color:blue%7clabel:S%7c#{feed_item.latitude},#{feed_item.longitude}&path=weight:3%7Ccolor:blue%7Cenc:{coaHnetiVjM??_SkM??~R&key=AIzaSyCp2SxzPnilWMAFfvo3QTr-EBCobz_dh6Y" %>
+	      </div>
+	      <p class="caption">
+	      	<%= feed_item.location %>
+	      </p>
+	      <p class="caption">
+	        <%= feed_item.description %>
+	      </p>
+	      <p class="caption">
+	      	<%= feed_item.tag_list %>
+	      </p>
+	      <% if current_user?(feed_item.user) %>
+	        <p>
+	        	<%= link_to "edit", edit_event_path(feed_item) %> |
+		    	<%= link_to "delete", feed_item, method: :delete, confirm: "You sure?" %>
+		    </p>
+		  <% else %>
+		    <% if current_user.guest?(feed_item) %>
+		      <%= form_for(current_user.invite_relationships.find_by(event_id: feed_item.id),
+		               html: { method: :delete }) do |f| %>
+		          <%= f.submit "Leave", class: "btn" %>
+		      <% end %>
+		    <% else %>
+		      <%= form_for(current_user.invite_relationships.build) do |f| %>
+		        <div><%= hidden_field_tag :event_id, feed_item.id %></div>
+		        <%= f.submit "Join", class: "btn btn-primary" %>
+		      <% end %>
+		    <% end %>
+		  <% end %>
+	    </div>
+  	<% end %>
   <% end %>
-  <ol class="events">
-    <%= render partial: 'shared/feed_item', collection: @feed_items %>
-  </ol>
-  <%= will_paginate @feed_items %>
-<% end %>
+</div>
