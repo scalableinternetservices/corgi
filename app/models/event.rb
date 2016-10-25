@@ -53,6 +53,14 @@ class Event < ApplicationRecord
           user_id: user.id)
   end
 
+  def self.events_can_been_seen_by(user)
+    frienda_user_ids = "SELECT friend_a FROM friends
+                        WHERE friend_b = :user_id"
+    friendb_user_ids = "SELECT friend_b FROM friends
+                        WHERE friend_a = :user_id"
+    where("isprivate = 0 OR (user_id IN (#{frienda_user_ids})) OR (user_id IN (#{friendb_user_ids}))", user_id: user.id)
+  end
+
 
 
 end

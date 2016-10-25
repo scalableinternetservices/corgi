@@ -13,7 +13,9 @@ class UsersController < ApplicationController
 	def show
     	@user = User.find(params[:id])
     	#@events = @user.events.paginate(page: params[:page])
-    	if @user.isfriend?(current_user)
+    	if @user == current_user
+    		@events = @user.events.paginate(page: params[:page])
+    	elsif @user.isfriend?(current_user)
     		@events = @user.events.paginate(page: params[:page])
     	else
     		@events = @user.events.where("isprivate = 0").paginate(page: params[:page])
