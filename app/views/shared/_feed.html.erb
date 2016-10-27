@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-<%= render partial: 'shared/search_form' %>
-<% if @feed_items != nil%>
-	<% if @feed_items.any? %>
-	  <% unless @search_query.nil? %>
-	  	<p>Searched: <%= @search_query %></p>
-	  <% end %>
-	  <ol class="events">
-	    <%= render partial: 'shared/feed_item', collection: @feed_items %>
-	  </ol>
-	  <%= will_paginate @feed_items %>
-	<% end %>
-<% end %>
-=======
 <div class="feed-items-wrapper row">
   <%= render partial: 'shared/search_form' %>
   <% if @feed_items.any? %>
@@ -63,4 +49,3 @@
   	<% end %>
   <% end %>
 </div>
->>>>>>> master

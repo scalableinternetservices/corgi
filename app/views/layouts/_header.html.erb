@@ -14,25 +14,10 @@
     <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <% if signed_in? %>
-<<<<<<< HEAD
-          <li><%= link_to "Users", users_path %></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Account <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "FriendCircle", friend_path%></li>
-              <li><%= link_to "Profile", current_user %></li>
-              <li><%= link_to 'Settings', edit_user_path(current_user) %></li>
-              <li class="divider"></li>
-              <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
-            </ul>
-          </li
-=======
           <li><%= link_to "Nearby", "#" %></li>
           <li><%= link_to "New Event", new_event_path %></li>
           <li><%= link_to "Profile", user_path(current_user.id) %></li>
->>>>>>> master
+          <li><%= link_to "FriendCircle", friend_path %></li>
         <% else %>
           <li><%= link_to "Login", '#' %></li>
         <% end %>
