@@ -10,7 +10,7 @@ class PagesController < ApplicationController
     if signed_in?
       @event = current_user.events.build 
       if params[:search].length > 0
-        @can_be_seen_events = Event.events_can_been_seen_by(current_user)
+        @can_be_seen_events = current_user.can_be_seen_events
         if params[:search][0] == '#'
           #@feed_items = Event.from_users_followed_by(current_user).tagged_with(params[:search]).paginate(page: params[:page])
           @feed_items = @can_be_seen_events.tagged_with(params[:search]).paginate(page: params[:page])

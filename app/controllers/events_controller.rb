@@ -2,6 +2,10 @@ class EventsController < ApplicationController
 	before_filter :signed_in_user
 	before_filter :correct_user, only: :destroy
 
+	def new
+		@event = Event.new
+	end
+
 	def create
 		@event = current_user.events.build(event_params) 
 		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")}
