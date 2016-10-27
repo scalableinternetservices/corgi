@@ -14,11 +14,12 @@
     <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <% if signed_in? %>
-          <li><%= link_to "Nearby", "#" %></li>
+        <li><%= link_to "Explore", friend_path %></li>
           <li><%= link_to "New Event", new_event_path %></li>
           <li><%= link_to "Profile", user_path(current_user.id) %></li>
+          <li><%= link_to "Logout", signout_path, method: :delete %></li>
         <% else %>
-          <li><%= link_to "Login", '#' %></li>
+          <li><%= link_to "Login", signin_path %></li>
         <% end %>
       </ul>
     </div>

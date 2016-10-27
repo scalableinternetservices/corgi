@@ -12,6 +12,7 @@ class User < ApplicationRecord
                                      dependent: :destroy
     has_many :followers, through: :passive_relationships, source: :follower
 
+
     has_many :invite_relationships, class_name: "Invite",
                                   foreign_key: "guest_id",
                                   dependent: :destroy
@@ -59,15 +60,23 @@ class User < ApplicationRecord
     end
 
     def unfollow(other_user)
-        active_relationships.find_by(followed_id: other_user.id).destroy
+        active_relationships.find_by(followed_id: other_user.id).destroy     
     end
 
     def following?(other_user)
         following.include?(other_user)
     end
 
+    def friends
+        following & followers
+    end
+
+    def is_friend?(other_user)
+        following.include?(other_user) && followers.include?(other_user)
+    end
+
     def feed
-        Event.from_users_followed_by(self)
+        Event.home_page_events(self)
     end
 
     def join(event)
