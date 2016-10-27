@@ -10,7 +10,7 @@ class EventsController < ApplicationController
 		@event = current_user.events.build(event_params) 
 		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")}
 		if @event.save
-			if @event.isprivate == 1
+			if @event.isprivate == true
 				flash[:success] = "Private Event Created!"
 			else 
 				flash[:success] = "Public Event Created!"

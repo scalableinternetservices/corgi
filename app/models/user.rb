@@ -70,6 +70,7 @@ class User < ApplicationRecord
     def isfriend?(other_user)
         following.include?(other_user) && followers.include?(other_user)
     end
+    
 =begin
     def friends
         #following.merge(followers)
@@ -93,6 +94,7 @@ class User < ApplicationRecord
         self.friends.include?(user)
     end
 =end
+
     def feed
         Event.home_page_events(self)
     end
