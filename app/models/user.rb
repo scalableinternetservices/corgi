@@ -1,6 +1,9 @@
 class User < ApplicationRecord
     attr_accessor :remember_token
 
+    has_attached_file :avatar, styles: { medium: '152x152#' }
+    validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+
     has_many :events, dependent: :destroy
     has_many :active_relationships, class_name: "Relationship",
                                     foreign_key: "follower_id",

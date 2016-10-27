@@ -6,6 +6,7 @@
     <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages', object: @user %>
 
+
       <%= f.label :user_name %>
       <%= f.text_field :user_name, class: 'form-control' %>
 
@@ -24,6 +25,14 @@
       <%= f.label :background, "Biography" %>
       <%= f.text_area :background, class: 'form-control' %>
 
+      <div class="form-group text-center">
+        <h4>Change your profile image:</h4>
+          <div class="img-circle" style="display: inline-block;vertical-align: middle;float: none;">
+            <%= profile_avatar_select(@user) %>
+          </div>
+            <%= f.file_field :avatar, onChange: 'loadFile(event)' %>
+      </div>
+
       <%= f.submit "Save changes", class: "btn btn-primary" %>
     <% end %>
 
@@ -33,3 +42,29 @@
     </div>
   </div>
 </div>
+
+<!--
+<div class="posts-wrapper">
+  <div class="post">
+    <div class="post-body">
+      <div class="image-wrap">
+        <%= form_for @user, url: {action: "update"}, html: { multipart: true } do |f| %>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group text-center">
+                <h4>Change your profile image:</h4>
+                <div class="img-circle">
+                  <%= profile_avatar_select(@user) %>
+                </div>
+                <%= f.file_field :avatar, onChange: 'loadFile(event)' %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group text-center">
+            <%= f.submit "Update Profile", class: 'btn btn-success' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>-->
