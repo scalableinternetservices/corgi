@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   get '/help', to: 'pages#help'
   get '/about', to: 'pages#about'
   post '/search', to: 'pages#search'
+  get '/search', to: 'pages#home'
+
+  get '/friend', to: 'pages#friend'
   get '/signup', to: 'users#new'
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
@@ -15,7 +18,7 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
-  resources :events, only: [:create, :destroy, :show, :edit, :update]
+  resources :events, only: [:create, :destroy, :show, :edit, :update, :new]
   resources :relationships, only: [:create, :destroy]
   resources :invites, only: [:create, :destroy]
 

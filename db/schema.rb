@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20161025160132) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "title"
+    t.boolean  "isprivate"
     t.index ["title"], name: "index_events_on_title"
     t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
     t.index ["user_id"], name: "index_events_on_user_id"
