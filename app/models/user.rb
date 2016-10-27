@@ -67,33 +67,13 @@ class User < ApplicationRecord
         following.include?(other_user)
     end
 
-    def isfriend?(other_user)
+    def friends
+        following & followers
+    end
+
+    def is_friend?(other_user)
         following.include?(other_user) && followers.include?(other_user)
     end
-    
-=begin
-    def friends
-        #following.merge(followers)
-        Relationship.where("follower_id = :user_id", user_id: self.id).select("followed_id").merge(
-            Relationship.where("followed_id = :user_id", user_id: self.id).select("follower_id"))
-    end
-
-    def private_events_from_friends
-        friends.includes(:events)
-    end
-
-    def public_events_from_following
-        (following.includes(:events)).where("isprivate = 0")
-    end
-
-    def can_be_seen_events
-        Event.where("isprivate = 0").or(private_events_from_friends)
-    end
-
-    def isfriend?(user)
-        self.friends.include?(user)
-    end
-=end
 
     def feed
         Event.home_page_events(self)

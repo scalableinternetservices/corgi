@@ -1,8 +1,6 @@
-
-
 <div class="feed-items-wrapper row">
   <%= render partial: 'shared/search_form' %>
-  <% if @feed_items %>
+  <% if @feed_items.any? %>
   	<% unless @search_query.nil? %>
   		<p>Searched: <%= @search_query %></p>
     <% end %>

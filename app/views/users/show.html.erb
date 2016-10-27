@@ -20,7 +20,7 @@
   </aside>
   <div class="col-md-9">
     <%= render 'follow_form' if signed_in? %>
-    <% if @user.events %>
+    <% if @user.events.any? %>
       <h3><%= @user.name %> Events (<%= @user.events.count %>)</h3>
       <ol class="events">
         <%= render @events %>
