@@ -79,7 +79,7 @@ class User < ApplicationRecord
     end
 
     def feed
-        Event.home_page_events(self)
+        Event.from_users_followed_by(self)
     end
 
     def join(event)

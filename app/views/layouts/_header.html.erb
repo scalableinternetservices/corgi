@@ -16,7 +16,7 @@
         <% if signed_in? %>
         <li><%= link_to "Explore", friend_path %></li>
           <li><%= link_to "New Event", new_event_path %></li>
-          <li><%= link_to "Profile", user_path(current_user.id) %></li>
+          <li><%= link_to "Profile", profile_path(current_user.user_name) %></li>
           <li><%= link_to "Logout", signout_path, method: :delete %></li>
         <% else %>
           <li><%= link_to "Login", signin_path %></li>
