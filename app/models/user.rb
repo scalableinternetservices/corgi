@@ -1,6 +1,9 @@
 class User < ApplicationRecord
     attr_accessor :remember_token
 
+    has_attached_file :avatar, styles: { medium: '152x152#' }
+    validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+
     has_many :events, dependent: :destroy
     has_many :active_relationships, class_name: "Relationship",
                                     foreign_key: "follower_id",
@@ -12,6 +15,7 @@ class User < ApplicationRecord
                                      dependent: :destroy
     has_many :followers, through: :passive_relationships, source: :follower
 
+
     has_many :invite_relationships, class_name: "Invite",
                                   foreign_key: "guest_id",
                                   dependent: :destroy
@@ -22,12 +26,14 @@ class User < ApplicationRecord
 
 	validates :name,  presence: true, length: { maximum: 50 }
     validates :user_name, presence: true, length: { minimum: 4, maximum: 15 }
+    validates :background, length: { maximum: 200 }
   	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   	validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
     has_secure_password
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
 
     def User.digest(string)
     	cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -57,11 +63,19 @@ class User < ApplicationRecord
     end
 
     def unfollow(other_user)
-        active_relationships.find_by(followed_id: other_user.id).destroy
+        active_relationships.find_by(followed_id: other_user.id).destroy     
     end
 
     def following?(other_user)
         following.include?(other_user)
+    end
+
+    def friends
+        following & followers
+    end
+
+    def is_friend?(other_user)
+        following.include?(other_user) && followers.include?(other_user)
     end
 
     def feed

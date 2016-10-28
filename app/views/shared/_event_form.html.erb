@@ -4,6 +4,9 @@
 <%= form_for(@event) do |f| %>
   <%= render 'shared/error_messages', object: @event %>
   <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+
   	<%= f.label :date %>
   	<%= f.date_select :date %>
 
@@ -12,6 +15,12 @@
   	
   	<%= f.label :description %>
     <%= f.text_area :description %>
+
+
+    <%= f.label :isprivate, class: "inline" do %>
+        <span>shown only to friends!</span>
+        <%= f.check_box :isprivate, {:class => "myclass", :style => "mystyle"}, 1, 0 %>
+    <% end %>
 
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>

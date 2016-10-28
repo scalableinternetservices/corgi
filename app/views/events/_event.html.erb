@@ -1,54 +1,49 @@
-<li id="event-<%= event.id %>">
-  <%= link_to gravatar_for(event.user), event.user %>
-  <span class="user"><%= link_to event.user.name, event.user %></span>
-  <span class="content"><%= event.date %></span>
-  <div class="content" id="link"><%= event.location %></div>
-  
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-    See in Google map
-  </button>
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-          <span><%= event.latitude %>, <%= event.longitude %></span>
-        <div class="modal-body">
-          <!-- <div id="mapCanvas" style="width: 640px; height: 400px"></div>  -->
-          <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?center=#{event.latitude},#{event.longitude}&zoom=16&size=550x400&markers=color:blue%7clabel:S%7c#{event.latitude},#{event.longitude}&path=weight:3%7Ccolor:blue%7Cenc:{coaHnetiVjM??_SkM??~R&key=AIzaSyCp2SxzPnilWMAFfvo3QTr-EBCobz_dh6Y" %>
-        </div>
-      </div>
+<div class="event">
+  <div class="event-head">
+    <%= link_to event.user.user_name, profile_path(event.user.user_name), :class => "user-name" %>
+    <div>
+      <%= link_to event.title, event_path(event), :class => "event-title" %>
+      <div class="time-ago"><%= time_ago_in_words(event.created_at) %></div>
     </div>
   </div>
+  <div class="map center-block">
+    <%= map_image(event) %>
+  </div>
 
-  <span class="content"><%= event.description %></span>
-   <span class="content"><%= event.tag_list %></span>
-  <span class="timestamp">
-    Created <%= time_ago_in_words(event.created_at) %> ago.
-  </span>
-  <span class="content"><%= event.guests.count %> Attending</span>
+  <div class="event-bottom">
+    <div class="location">
+      <span class="glyphicon glyphicon-globe"></span>
+      <%= event.location %>
+    </div>
 
+    <div class="attending">
+      <span class="glyphicon glyphicon-user"></span>
+      <%= event.guests.count %> Attending
+    </div>
 
-  <% if current_user?(event.user) %>
-    <%= link_to "delete", event, method: :delete,
-                                     confirm: "You sure?" %>
-  <% else %>
-    <% if current_user.guest?(event) %>
-      <%= form_for(current_user.invite_relationships.find_by(event_id: event.id),
-               html: { method: :delete }) do |f| %>
-          <%= f.submit "Leave", class: "btn" %>
-      <% end %>
+    <div class="description">
+      <%= event.description %>
+    </div>
+    <div class="tag-list">
+      <%= event.tag_list %>
+    </div>
+    <% if current_user?(event.user) %>
+      <p>
+        <%= link_to "edit", edit_event_path(event) %> |
+        <%= link_to "delete", event, method: :delete, confirm: "You sure?" %>
+      </p>
     <% else %>
-      <%= form_for(current_user.invite_relationships.build) do |f| %>
-        <div><%= hidden_field_tag :event_id, event.id %></div>
-        <%= f.submit "Join", class: "btn btn-primary" %>
+      <% if current_user.guest?(event) %>
+        <%= form_for(current_user.invite_relationships.find_by(event_id: event.id),
+                 html: { method: :delete }) do |f| %>
+            <%= f.submit "Leave", class: "btn" %>
+        <% end %>
+      <% else %>
+        <%= form_for(current_user.invite_relationships.build) do |f| %>
+          <div><%= hidden_field_tag :event_id, event.id %></div>
+          <%= f.submit "Join", class: "btn btn-primary" %>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
-</li>
+  </div>
+</div>
