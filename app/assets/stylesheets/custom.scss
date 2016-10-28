@@ -52,37 +52,101 @@ body {
   margin: 0 auto;
 }
 
-.feed-items-wrapper {
+.events-wrapper {
   padding-top: 40px;
   margin: 0 auto;
   max-width: 642px;
   width: 100%;
 }
 
-.feed-item {
+
+.event {
   background-color: #fff;
   border-color: #edeeee;
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   margin-bottom: 60px;
-}
 
-.feed-item-head {
-  height: 64px;
-  padding: 14px 20px;
-  color: #125688;
-  font-size: 15px;
-  line-height: 18px;
-  .thumbnail {}
-  .name {
-    display: block;
+  .event-head {
+    flex-direction: row;
+    height: 64px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 15px;
+    color: #125688;
+    font-size: 15px;
+    line-height: 18px;
+
+    .user-name, .time-ago, .event-title {
+      display: inline;
+    }
+    .user-name {
+      font-weight: 500;
+    }
+    .event-title{
+      font-weight: 400;
+      color: black;
+    }
+    .time-ago {
+      color: #A5A7AA;
+      float: right;
+    }
+    .join-icon{
+      float: right;
+    }
+  }
+  .map {
+    border-bottom: 1px solid #eeefef;
+    border-top: 1px solid #eeefef;
   }
 }
 
-.map {
-  border-bottom: 1px solid #eeefef;
-  border-top: 1px solid #eeefef;
+.event-bottom {
+  .location {
+    font-weight: 400;
+    padding-left: 15px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  .description, .tag-list, .attending {
+    font-weight: 300;
+    padding-left: 15px;
+    padding-bottom:10px;
+  }
+  .user-name, .comment-content {
+    display: inline;
+  }
+
+  .caption {
+    margin-bottom: 7px;
+  }
+  .user-name {
+    font-weight: 500;
+    color: #125688;
+    font-size: 15px;
+  }
+  .user-name, .caption-content {
+    display: inline;
+  }
+  #comment {
+    margin-top: 7px;
+    .user-name {
+      font-weight: 500;
+      margin-right: 0.3em;
+    }
+    .delete-comment {
+      float: right;
+      color: #515151;
+    }
+  }
+  margin-bottom: 7px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  line-height: 18px;
 }
 
 .caption {
@@ -133,6 +197,68 @@ body {
   text-overflow: ellipsis;
   vertical-align: bottom;
   white-space: nowrap;
+}
+
+.img-circle {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
+}
+
+#user_avatar {
+  margin: 20px auto;
+}
+
+.profile-header {
+  padding: 20px 0;
+}
+
+.profile-image {
+  margin: 20px auto;
+  height: 152px;
+  width: 152px;
+}
+
+.user-name-and-follow {
+  display: inline;
+}
+
+.profile-user-name {
+  display: inline;
+}
+
+.edit-button {
+  border-color: #818488;
+  color: #818488;
+  margin-left: 20px;
+}
+
+.profile-bio {
+  margin-top: 20px;
+}
+
+.follow-button {
+  text-transform: uppercase;
+  border-color: #4090db;
+  color: #4090db;
+  margin-left: 20px;
+  &:visited, &:focus, &:hover {
+    border-color: #2D6396;
+    color: #2D6396;
+  }
+}
+
+.unfollow-button {
+  text-transform: uppercase;
+  border-color: #66bd2b;
+  background-color: #66bd2b;
+  color: white;
+  margin-left: 20px;
+  &:visited, &:focus, &:hover {
+    border-color: #47821F;
+    background-color: #47821F;
+    color: white;
+  }
 }
 
 
