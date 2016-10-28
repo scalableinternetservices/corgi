@@ -15,16 +15,16 @@ class EventsController < ApplicationController
 			else 
 				flash[:success] = "Public Event Created!"
 			end
-			redirect_to current_user
+			redirect_to profile_path(current_user.user_name)
 		else
-			render 'pages/home'
-			#redirect_to root_path
+			
+			redirect_to root_path
 		end
 	end
 
 	def destroy
 		@event.destroy
-		redirect_to current_user
+		redirect_to profile_path(current_user.user_name)
 	end
 
 	def show

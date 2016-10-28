@@ -10,8 +10,8 @@ class UsersController < ApplicationController
 		@user = User.new(user_params)
 		if @user.save
 			sign_in @user
-			flash[:success] = "Welcome to UCLAevents!"
-			redirect_to @user
+			flash[:success] = "Welcome to UCLA events!"
+			redirect_to profile_path(@user.user_name)
 		else 
 			render 'new'
 		end
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		if @user.update(user_params)
 			flash[:success] = "Profile change successfully"
-			redirect_to @user
+			redirect_to profile_path(@user.user_name)
 		else
 			render 'edit'
 		end
