@@ -4,7 +4,11 @@ class ProfilesController < ApplicationController
 
     def show
       @user = User.find_by(user_name: params[:user_name])
-      @events = User.find_by(user_name: params[:user_name]).events.order('created_at DESC')
+      if @user
+        @events = User.find_by(user_name: params[:user_name]).events.order('created_at DESC')
+      else
+        redirect_to root_path
+      end
     end
 
     def edit
