@@ -7,6 +7,8 @@ class User < ApplicationRecord
                                     dependent: :destroy
     has_many :following, through: :active_relationships, source: :followed
 
+    has_many :notifications, dependent: :destroy  
+
     has_many :passive_relationships, class_name: "Relationship",
                                      foreign_key: "followed_id",
                                      dependent: :destroy
@@ -16,6 +18,8 @@ class User < ApplicationRecord
                                   foreign_key: "guest_id",
                                   dependent: :destroy
     has_many :invites, through: :invite_relationships, source: :event
+
+    has_many :comments, dependent: :destroy
 
 	
 	before_save { self.email = email.downcase }

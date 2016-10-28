@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'notifications/:id/link_through', to: 'notifications#link_through',
+                                        as: :link_through
+  get 'notifications', to: 'notifications#index'
+
   root 'pages#home'
 
   get '/', to: 'pages#home'
@@ -15,7 +19,12 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
-  resources :events, only: [:create, :destroy, :show, :edit, :update, :new]
+
+  resources :events, only: [:create, :destroy, :show, :edit, :update, :new] do
+  	resources :comments
+  end
+  resources :events, only: [:create, :destroy, :show, :edit, :update]
+
   resources :relationships, only: [:create, :destroy]
   resources :invites, only: [:create, :destroy]
 

@@ -7,7 +7,12 @@ class Event < ApplicationRecord
   has_many :guest_relationships, class_name: "Invite",
                                   foreign_key: "event_id",
                                   dependent: :destroy
+
   has_many :guests, through: :guest_relationships
+
+  has_many :notifications, dependent: :destroy  
+
+  has_many :comments, dependent: :destroy
 
   default_scope -> { order(created_at: :desc)}
   validates :title,  presence: true, length: { maximum: 20 }

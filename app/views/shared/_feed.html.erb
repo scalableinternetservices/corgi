@@ -27,6 +27,43 @@
 	      <p class="caption">
 	      	<%= feed_item.tag_list %>
 	      </p>
+
+	      <!--comments-->
+		  <div class="events-wrapper row">
+		      <div class="events-head">
+		        <div class="user-name">
+		          <%= feed_item.user.user_name %>
+		        </div>
+		      </div>
+		      <div class="event-bottom">
+		        <% if feed_item.comments %>
+		          <% feed_item.comments.each do |comment| %>
+		            <div class="comment">
+		              <div class="user-name">
+		                <%= comment.user.user_name %>
+		                <b> says: </b>
+		                <br>
+		              </div>
+		              <div class="comment-content">
+		                <%= comment.content %>
+		              </div>
+		              
+		              <% if current_user?(comment.user) %>
+		                <%= link_to "Delete", event_comment_path(feed_item, comment), method: :delete, data: { confirm: "Are you sure?" } %>
+		              <% end %>
+
+		            </div>
+		        <% end %>
+		        <% end %>
+		        <div class="comment-form">
+		        	<%= form_for [feed_item, feed_item.comments.new] do |f| %>
+		            <%= f.text_field :content, placeholder: 'Add a comment...' %>
+		            <% end %>
+		        </div>
+		     </div>
+		  </div>
+
+
 	      <% if current_user?(feed_item.user) %>
 	        <p>
 	        	<%= link_to "edit", edit_event_path(feed_item) %> |

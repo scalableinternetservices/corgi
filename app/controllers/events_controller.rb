@@ -53,4 +53,8 @@ class EventsController < ApplicationController
 	      @event = current_user.events.find_by_id(params[:id])
 	      redirect_to root_path if @event.nil?
 	    end
+
+	    def set_post
+    		@event = Event.find(params[:id])
+  		end
 end
