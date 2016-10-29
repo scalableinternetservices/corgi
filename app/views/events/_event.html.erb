@@ -25,13 +25,15 @@
       <%= event.description %>
     </div>
     <div class="tag-list">
-      <%= event.tag_list %>
+      <% event.tag_list.each do |tag| %>
+        <%= link_to tag, search_path(:search => tag), method: :post %>
+      <% end %>
     </div>
     <% if current_user?(event.user) %>
-      <p>
+      <div class="edit-link">
         <%= link_to "edit", edit_event_path(event) %> |
         <%= link_to "delete", event, method: :delete, confirm: "You sure?" %>
-      </p>
+      </div>
     <% else %>
       <% if current_user.guest?(event) %>
         <%= form_for(current_user.invite_relationships.find_by(event_id: event.id),

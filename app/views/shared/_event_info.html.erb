@@ -1,0 +1,31 @@
+<div class="info-wrapper row">
+	<div class="col-md-3">
+		<%= inline_avatar_select(event.user) %>
+	</div>
+	<div class="col-md-3">
+		<div><%= link_to event.title, event_path(event) %></div>
+		<div><%= event.user.user_name %></div>
+	</div>
+	<div class="col-md-3">
+		<% event.tag_list.each do |tag| %>
+        	<%= link_to tag, search_path(:search => tag), method: :post %>
+     	<% end %>
+	</div>
+
+	<div class="col-md-3">
+		<% if current_user.guest?(event) %>
+			<%= link_to 'Leave', invite_path(event.user.invites.where(:event_id => event.id)),
+		        { :method => :delete, 
+		      	:class => 'btn follow-button', 
+		      	:id => 'leave-button' } %>
+		   
+		<% else %>
+		     <%= link_to 'Join', invites_path(event_id: event.id), {
+		      :action => 'create',
+		      :class => 'btn unfollow-button',
+		      :id => 'join-button',
+		      :method => :post } %>
+		<% end %>
+	</div>
+</div>
+<hr>

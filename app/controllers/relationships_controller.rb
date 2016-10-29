@@ -6,7 +6,7 @@ class RelationshipsController < ApplicationController
 	    @user = User.find_by(user_name: params[:user_name])
 	    if current_user.follow(@user)
 	      respond_to do |format|
-	        format.html { redirect_to root_path }
+	        format.html { redirect_to profile_path(@user) }
 	        format.js
 	      end
 	    end

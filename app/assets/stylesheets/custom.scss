@@ -92,7 +92,8 @@ body {
       color: #A5A7AA;
       float: right;
     }
-    .join-icon{
+    .event-btn {
+      display: inline;
       float: right;
     }
   }
@@ -110,7 +111,7 @@ body {
     padding-bottom: 10px;
   }
 
-  .description, .tag-list, .attending {
+  .description, .tag-list, .attending, .edit-link {
     font-weight: 300;
     padding-left: 15px;
     padding-bottom:10px;
@@ -217,6 +218,11 @@ body {
   margin: 20px auto;
   height: 152px;
   width: 152px;
+}
+
+.inline-profile-image {
+  height: 50px;
+  width: 50px;
 }
 
 .user-name-and-follow {
