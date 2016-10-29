@@ -3,11 +3,9 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  get '/', to: 'pages#home'
   get '/help', to: 'pages#help'
   get '/about', to: 'pages#about'
   post '/search', to: 'pages#search'
-  get '/search', to: 'pages#home'
 
   get '/friend', to: 'pages#friend'
   get '/signup', to: 'users#new'

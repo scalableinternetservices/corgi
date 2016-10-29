@@ -92,7 +92,8 @@ body {
       color: #A5A7AA;
       float: right;
     }
-    .join-icon{
+    .event-btn {
+      display: inline;
       float: right;
     }
   }
@@ -110,7 +111,7 @@ body {
     padding-bottom: 10px;
   }
 
-  .description, .tag-list, .attending {
+  .description, .tag-list, .attending, .edit-link {
     font-weight: 300;
     padding-left: 15px;
     padding-bottom:10px;
@@ -219,6 +220,11 @@ body {
   width: 152px;
 }
 
+.inline-profile-image {
+  height: 50px;
+  width: 50px;
+}
+
 .user-name-and-follow {
   display: inline;
 }
@@ -259,6 +265,15 @@ body {
     background-color: #47821F;
     color: white;
   }
+}
+
+.search-bar {
+  border: 1px solid #bbb;
+  width: 225px;
+  padding: 10px;
+  height: 35px;
+  margin-bottom: 15px;
+  @include box_sizing;
 }
 
 
@@ -306,24 +321,6 @@ p {
   line-height: 1.7em;
 }
 
-/* header */
-
-#logo {
-  float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 9px;
-  font-weight: bold;
-
-  &:hover {
-    color: #fff;
-    text-decoration: none;
-  }
-}
-
 /* footer */
 
 footer {
@@ -350,56 +347,15 @@ footer {
   }
 }
 
-/* sidebar */
-
-aside {
-  section.user_info {
-    margin-top: 20px;
-  }
-  section {
-    padding: 10px 0;
-    margin-top: 20px;
-    &:first-child {
-      border: 0;
-      padding-top: 0;
-    }
-    span {
-      display: block;
-      margin-bottom: 3px;
-      line-height: 1;
-    }
-    h1 {
-      font-size: 1.4em;
-      text-align: left;
-      letter-spacing: -1px;
-      margin-bottom: 3px;
-      margin-top: 0px;
-    }
-  }
-}
-
-.gravatar {
-  float: left;
-  margin-right: 10px;
-}
-
-.gravatar_edit {
-  margin-top: 15px;
-}
-
 /* forms */
 
-input, textarea, select, .uneditable-input {
+textarea, select, .uneditable-input, .join-btn {
   border: 1px solid #bbb;
   width: 100%;
   padding: 10px;
   height: auto !important;
   margin-bottom: 15px;
   @include box_sizing;
-}
-
-input {
-  height: auto !important;
 }
 
 #error_explanation {
@@ -431,110 +387,10 @@ input {
   margin-left: 0;
 }
 
-/* Users index */
-
-.users {
-  list-style: none;
-  margin: 0;
-  li {
-    overflow: auto;
-    padding: 10px 0;
-    border-bottom: 1px solid $gray-lighter;
-  }
-}
-
-
-.events {
-  list-style: none;
-  padding: 0;
-  li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
-  }
-  .user {
-    margin-top: 5em;
-    padding-top: 0;
-  }
-  .content {
-    display: block;
-    margin-left: 60px;
-    img {
-      display: block;
-      padding: 5px 0;
-    }
-  }
-  .timestamp {
-    color: $gray-light;
-    display: block;
-    margin-left: 60px;
-  }
-  .gravatar {
-    float: left;
-    margin-right: 10px;
-    margin-top: 5px;
-  }
-}
-
-aside {
-  textarea {
-    height: 100px;
-    margin-bottom: 5px;
-  }
-}
-
 span.picture {
   margin-top: 10px;
   input {
     border: 0;
   }
-}
-
-/* sidebar */
-
-.gravatar {
-  float: left;
-  margin-right: 10px;
-}
-
-.gravatar_edit {
-  margin-top: 15px;
-}
-
-.stats {
-  overflow: auto;
-  margin-top: 0;
-  padding: 0;
-  a {
-    float: left;
-    padding: 0 10px;
-    border-left: 1px solid $gray-lighter;
-    color: gray;
-    &:first-child {
-      padding-left: 0;
-      border: 0;
-    }
-    &:hover {
-      text-decoration: none;
-      color: blue;
-    }
-  }
-  strong {
-    display: block;
-  }
-}
-
-.user_avatars {
-  overflow: auto;
-  margin-top: 10px;
-  .gravatar {
-    margin: 1px 1px;
-  }
-  a {
-    padding: 0;
-  }
-}
-
-.users.follow {
-  padding: 0;
 }
 

@@ -18,14 +18,14 @@
 					  <% if current_user.following?(@user) %>
 					    <%= link_to 'Following', unfollow_user_path, {
 					      :remote => true,
-					      :class => 'btn unfollow-button',
-					      :id => 'unfollow-button',
+					      :class => "btn unfollow-button",
+					      :id => "unfollow-button-#{@user.id}",
 					      :method => :post } %>
 					  <% else %>
 					    <%= link_to 'Follow', follow_user_path,
 					      { :remote => true, 
 					      	:class => 'btn follow-button', 
-					      	:id => 'follow-button', 
+					      	:id => "follow-button-#{@user.id}", 
 					      	:method => :post } %>
 					  <% end %>
 					<% end %>
