@@ -38,12 +38,12 @@
       <% if current_user.guest?(event) %>
         <%= form_for(current_user.invite_relationships.find_by(event_id: event.id),
                  html: { method: :delete }) do |f| %>
-            <%= f.submit "Leave", class: "btn" %>
+            <%= f.submit "Leave", class: "btn join-btn" %>
         <% end %>
       <% else %>
         <%= form_for(current_user.invite_relationships.build) do |f| %>
           <div><%= hidden_field_tag :event_id, event.id %></div>
-          <%= f.submit "Join", class: "btn btn-primary" %>
+          <%= f.submit "Join", class: "btn btn-primary join-btn" %>
         <% end %>
       <% end %>
     <% end %>
