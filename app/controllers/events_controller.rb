@@ -10,17 +10,21 @@ class EventsController < ApplicationController
 		@event = current_user.events.build(event_params) 
 		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")}
 		if @event.save
-			flash[:success] = "Event Created!"
-			redirect_to current_user
+			if @event.isprivate == true
+				flash[:success] = "Private Event Created!"
+			else 
+				flash[:success] = "Public Event Created!"
+			end
+			redirect_to profile_path(current_user.user_name)
 		else
-			render 'pages/home'
-
+			
+			redirect_to root_path
 		end
 	end
 
 	def destroy
 		@event.destroy
-		redirect_to current_user
+		redirect_to profile_path(current_user.user_name)
 	end
 
 	def show
@@ -46,7 +50,7 @@ class EventsController < ApplicationController
 	private
 	  	def event_params
 	    	params.require(:event).permit(:title, :user, :date, :location,
-	                                   :description, :tag_list)
+	                                   :description, :tag_list, :isprivate)
 	  	end
 
 	  	def correct_user

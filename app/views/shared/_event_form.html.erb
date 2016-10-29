@@ -16,6 +16,12 @@
   	<%= f.label :description %>
     <%= f.text_area :description %>
 
+
+    <%= f.label :isprivate, class: "inline" do %>
+        <span>shown only to friends!</span>
+        <%= f.check_box :isprivate, {:class => "myclass", :style => "mystyle"}, 1, 0 %>
+    <% end %>
+
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>
 <% end %>

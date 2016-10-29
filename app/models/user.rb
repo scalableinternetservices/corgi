@@ -1,6 +1,9 @@
 class User < ApplicationRecord
     attr_accessor :remember_token
 
+    has_attached_file :avatar, styles: { medium: '152x152#' }
+    validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+
     has_many :events, dependent: :destroy
     has_many :active_relationships, class_name: "Relationship",
                                     foreign_key: "follower_id",
@@ -13,6 +16,7 @@ class User < ApplicationRecord
                                      foreign_key: "followed_id",
                                      dependent: :destroy
     has_many :followers, through: :passive_relationships, source: :follower
+
 
     has_many :invite_relationships, class_name: "Invite",
                                   foreign_key: "guest_id",
@@ -63,11 +67,19 @@ class User < ApplicationRecord
     end
 
     def unfollow(other_user)
-        active_relationships.find_by(followed_id: other_user.id).destroy
+        active_relationships.find_by(followed_id: other_user.id).destroy     
     end
 
     def following?(other_user)
         following.include?(other_user)
+    end
+
+    def friends
+        following & followers
+    end
+
+    def is_friend?(other_user)
+        following.include?(other_user) && followers.include?(other_user)
     end
 
     def feed

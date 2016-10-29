@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
+
   get 'notifications/:id/link_through', to: 'notifications#link_through',
                                         as: :link_through
   get 'notifications', to: 'notifications#index'
+
+  get 'profiles/show'
 
   root 'pages#home'
 
@@ -9,12 +12,15 @@ Rails.application.routes.draw do
   get '/help', to: 'pages#help'
   get '/about', to: 'pages#about'
   post '/search', to: 'pages#search'
+  get '/search', to: 'pages#home'
+
+  get '/friend', to: 'pages#friend'
   get '/signup', to: 'users#new'
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
   delete '/signout', to: 'sessions#destroy'
 
-  resources :users do
+  resources :users, only: [:new, :create, :edit, :update] do
     member do
       get :following, :followers
     end
@@ -26,6 +32,15 @@ Rails.application.routes.draw do
   resources :events, only: [:create, :destroy, :show, :edit, :update]
 
   resources :relationships, only: [:create, :destroy]
+
+  get ':user_name', to: 'profiles#show', as: :profile 
+  get ':user_name/edit', to: 'profiles#edit', as: :edit_profile
+  patch ':user_name/edit', to: 'profiles#update', as: :update_profile
+
+  post ':user_name/follow_user', to: 'relationships#follow_user', as: :follow_user
+  post ':user_name/unfollow_user', to: 'relationships#unfollow_user', as: :unfollow_user
+
+
   resources :invites, only: [:create, :destroy]
 
 end

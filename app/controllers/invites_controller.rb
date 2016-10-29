@@ -10,6 +10,6 @@ class InvitesController < ApplicationController
 	def destroy
 	    event = Invite.find(params[:id]).event
 	    current_user.leave(event)
-	    redirect_to '/'
+	    redirect_to root_path
 	end
 end
