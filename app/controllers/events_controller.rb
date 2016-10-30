@@ -9,7 +9,9 @@ class EventsController < ApplicationController
 	def create
 		@event = current_user.events.build(event_params) 
 		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")}
+
 		if @event.save
+			current_user.join(@event)
 			if @event.isprivate == true
 				flash[:success] = "Private Event Created!"
 			else 
@@ -40,7 +42,7 @@ class EventsController < ApplicationController
 		ep = event_params
 		ep[:tag_list] = ep[:description].split(" ").select {|word| word.start_with?("#")}
 		if @event.update(ep)
-			flash[:success] = "Event change successfully"
+			flash[:success] = "Event updated!"
 			redirect_to @event
 		else
 			render 'edit'
