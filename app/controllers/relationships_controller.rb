@@ -1,10 +1,12 @@
 class RelationshipsController < ApplicationController
 	before_action :signed_in_user
 
-
 	def follow_user
 	    @user = User.find_by(user_name: params[:user_name])
-	    if current_user.follow(@user)
+	    if current_user == @user
+	    	flash[:error] = "Can't follow yourself!"
+	    	redirect_to root_path
+	    elsif current_user.follow(@user)
 	      respond_to do |format|
 	        format.html { redirect_to profile_path(@user) }
 	        format.js
@@ -14,7 +16,10 @@ class RelationshipsController < ApplicationController
 
   	def unfollow_user
 	    @user = User.find_by(user_name: params[:user_name])
-	    if current_user.unfollow(@user)
+	    if current_user == @user
+	    	flash[:error] = "Can't unfollow yourself!"
+	    	redirect_to root_path
+	    elsif current_user.unfollow(@user)
 	      respond_to do |format|
 	        format.html { redirect_to root_path }
 	        format.js

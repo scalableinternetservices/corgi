@@ -18,7 +18,7 @@
 
     <div class="attending">
       <span class="glyphicon glyphicon-user"></span>
-      <%= event.guests.count %> Attending
+      <%= link_to "#{event.guests.count} Attending", "#attending-modal-#{event.id}", :class => 'btn-link', "data-toggle" => "modal" %>
     </div>
 
     <div class="description">
@@ -47,5 +47,22 @@
         <% end %>
       <% end %>
     <% end %>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="attending-modal-<%= event.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= "#{pluralize(event.guests.count, 'Guest')}" %></h4>
+      </div>
+      <div class="modal-body">
+        <% event.guests.each do |user| %>
+          <%= render 'shared/user_info', :user => user %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
