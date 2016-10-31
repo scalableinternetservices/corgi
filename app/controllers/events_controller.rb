@@ -17,7 +17,7 @@ class EventsController < ApplicationController
 			else 
 				flash[:success] = "Public Event Created!"
 			end
-			redirect_to profile_path(current_user.user_name)
+			redirect_to @event
 		else
 			
 			redirect_to root_path
