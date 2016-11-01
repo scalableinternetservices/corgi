@@ -37,7 +37,7 @@ gem 'json', '1.8.2'
 
 gem 'acts-as-taggable-on', '4.0.0'
 
-#gem 'coffee-script-source', '1.8.0'
+gem 'coffee-script-source', '1.8.0'
 
 gem "paperclip", "~> 5.0.0"
 
