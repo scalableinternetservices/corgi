@@ -10,23 +10,35 @@
 	</servers>
 
 	<load>
-		<!-- simple testing -->
-		<arrivalphase phase="1" duration="1" unit="second">
+		<!-- debug with one user -->
+		<!-- <arrivalphase phase="1" duration="1" unit="second">
 			<users arrivalrate="1" unit="second"/>
-		</arrivalphase>
+		</arrivalphase> -->
+
+		<!-- simple testing -->
+		<!-- <arrivalphase phase="1" duration="10" unit="second">
+			<users arrivalrate="1" unit="second"/>
+		</arrivalphase> -->
 		<!-- end simple testing -->
 
 		<!-- complex testing -->
+		<!-- phase 1: 30 secs, 1 user per sec -->
 		<!-- <arrivalphase phase="1" duration="30" unit="second">
 			<users arrivalrate="1" unit="second"></users>
-		</arrivalphase>
-		<arrivalphase phase="2" duration="30" unit="second">
+		</arrivalphase> -->
+
+		<!-- phase 2: 30 secs, 2 users per sec -->
+		<!-- <arrivalphase phase="2" duration="30" unit="second">
 			<users arrivalrate="2" unit="second"></users>
-		</arrivalphase>
-		<arrivalphase phase="3" duration="30" unit="second">
+		</arrivalphase> -->
+
+		<!-- phase 3: 30 secs, 4 users per sec -->
+		<!-- <arrivalphase phase="3" duration="30" unit="second">
 			<users arrivalrate="4" unit="second"></users>
-		</arrivalphase>
-		<arrivalphase phase="4" duration="30" unit="second">
+		</arrivalphase> -->
+		
+		<!-- phase 4: 30 secs, 8 users per sec -->
+		<!-- <arrivalphase phase="4" duration="30" unit="second">
 			<users arrivalrate="8" unit="second"></users>
 		</arrivalphase> -->
 		<!-- end complex testing -->
