@@ -3,13 +3,16 @@ import spur
 import spur.ssh
 
 if (len(sys.argv) < 4):
-	print "Usage py load_testing <pem_file> <testing script> <tsung_host>"
+	print "Usage py load_testing <pem_file> <testing script> <tsung_host> <copy_down=False>"
 	exit(1)
 
 pem_file = sys.argv[1]
 testing_script = sys.argv[2]
 tsung_host = sys.argv[3]
 tsung_home_dir = "ec2-user@{0}:~".format(tsung_host)
+copy_down = False
+if sys.argv[4] && sys.argv[4] == "true":
+	copy_down = True
 
 local_shell = spur.LocalShell()
 scp_result = local_shell.run(["scp", "-i", pem_file, testing_script, tsung_home_dir])
@@ -28,10 +31,11 @@ print tsung_result.output
 
 log_dir = tsung_result.output.split(":")[1][1:-1]
 print "Going to log_file {0}".format(log_dir)
-# cd_out = ec2_shell.run(["cd", log_dir])
-# print cd_out.output
 
 stats_out = ec2_shell.run(["tsung_stats.pl"], cwd=log_dir)
 print stats_out.output
+
+if copy_down:
+	local_shell.run(["scp", "-r", "-i", pem_file, log_dir, "."])
 
 
