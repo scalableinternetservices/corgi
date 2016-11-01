@@ -6,7 +6,7 @@
 	</clients>
 
 	<servers>
-		<server host="ec2-35-161-244-213.us-west-2.compute.amazonaws.com" port="80" type="tcp"/>
+		<server host="HOSTNAME_OR_IP_OF_APP_SERVER" port="80" type="tcp"/>
 	</servers>
 
 	<load>
@@ -92,10 +92,11 @@
 
 			<!-- edit background in profile -->
 			<request subst="true">
-				<http url="/%%_new_user_name/edit" 
+				<http url="/%%_new_user_name%%/edit" 
 					version="1.1" 
-					method="POST" 
-					contents="background=random%20background"/>
+					method="PATCH" 
+					contents="user%5Bbackground%5D=random%20background&amp;
+						commit=Update+Profile"/>
 			</request>
 
 			<!-- get new event form -->
@@ -150,7 +151,7 @@
 
 			<!-- follow user1 (first result) -->
 			<request subst="true">
-				<http url="/user1/follow%5Fuser" 
+				<http url="/user1/follow_user" 
 					version="1.1" 
 					method="POST"/>
 			</request>

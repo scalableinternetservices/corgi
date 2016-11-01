@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
-	before_filter :signed_in_user
-	before_filter :correct_user, only: :destroy
+	before_action :signed_in_user
+	before_action :correct_user, only: :destroy
 
 	def new
 		@event = Event.new
@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 
 	def create
 		@event = current_user.events.build(event_params) 
-		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")}
+		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")} if @event.description
 
 		if @event.save
 			current_user.join(@event)
@@ -40,7 +40,7 @@ class EventsController < ApplicationController
 	def update
 		@event = Event.find(params[:id])
 		ep = event_params
-		ep[:tag_list] = ep[:description].split(" ").select {|word| word.start_with?("#")}
+		ep[:tag_list] = ep[:description].split(" ").select {|word| word.start_with?("#")} if ep[:description]
 		if @event.update(ep)
 			flash[:success] = "Event updated!"
 			redirect_to @event
