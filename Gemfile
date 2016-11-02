@@ -43,6 +43,10 @@ gem "paperclip", "~> 5.0.0"
 
 gem 'simple_form', '3.3.1'
 
+gem 'fog'
+
+gem 'aws-sdk'
+
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
