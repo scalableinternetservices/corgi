@@ -87,12 +87,12 @@ Rails.application.configure do
   config.paperclip_defaults = {
     :storage => :fog,
     :fog_credentials => {
-    :use_iam_profile => true,
-    :provider => 'AWS',
-    :region => 'us-west-2'
+      :use_iam_profile => true,
+      :provider => 'AWS',
+      :region => 'us-west-2'
     },
     :fog_directory => 'scalableinternetservices',
-    :path => 'corgi/'
+    :path => 'corgi/:class/:id/:style.:extension'
   }
 
 end
