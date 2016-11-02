@@ -15,7 +15,7 @@
 					  <%= link_to 'Edit Profile', edit_profile_path(@user.user_name),
 					    :class => 'btn edit-button' %>
         
-        <%= link_to "&#8943;".html_safe, "#settings-modal-#{@user.id}", :class => 'btn edit-button', "data-toggle" => "modal" %>
+            <%= link_to "&#8943;".html_safe, "#settings-modal", :class => 'btn edit-button', "data-toggle" => "modal" %>
 
 					<% else %>
 					  <% if current_user.following?(@user) %>
@@ -38,19 +38,12 @@
         <%= @user.background %>
       </p>
       <div class="user-statistics">
-        <p>
-          <%= pluralize @user.events.count, 'event' %>
-        </p>
+        <span><%= pluralize @user.events.count, 'event' %></span>
+        <span><%= link_to "#{@user.followers.count} Followers", "#followers-modal", :class => 'btn-link', "data-toggle" => "modal" %></span>
+        <span><%= link_to "#{@user.following.count} Following", "#following-modal", :class => 'btn-link', "data-toggle" => "modal" %></span>
       </div>
-      <div class="row">
-      <div class="following pull-left" style="margin-left:1em; margin-right:3em;">
-        <span class="glyphicon glyphicon-user"></span>
-        <%= link_to "#{@user.following.count} Following", "#following-modal-#{@user.id}", :class => 'btn-link', "data-toggle" => "modal" %>
-      </div>
-      <div class="followers pull-left">
-        <span class="glyphicon glyphicon-user"></span>
-        <%= link_to "#{@user.followers.count} Followers", "#followers-modal-#{@user.id}", :class => 'btn-link', "data-toggle" => "modal" %>
-      </div>
+      <div>
+        <%= @user.name %>
       </div>
     </div>
   </div>
@@ -64,12 +57,12 @@
 
 
 <!-- Modal Following-->
-<div class="modal fade" id="following-modal-<%= @user.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="following-modal" tabindex="-1" role="dialog" aria-labelledby="followingModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><%= "#{pluralize(@user.following.count, 'Following')}" %></h4>
+        <h4 class="modal-title" id="followingModalLabel"><%= "Following (#{@user.following.count})" %></h4>
       </div>
       <div class="modal-body">
         <% @user.following.each do |user| %>
@@ -81,12 +74,12 @@
 </div>
 
 <!-- Modal Followers-->
-<div class="modal fade" id="followers-modal-<%= @user.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="followers-modal" tabindex="-1" role="dialog" aria-labelledby="followerModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><%= "#{pluralize(@user.followers.count, 'Followers')}" %></h4>
+        <h4 class="modal-title" id="followerModalLabel"><%= "Followers (#{@user.following.count})" %></h4>
       </div>
       <div class="modal-body">
         <% @user.followers.each do |user| %>
@@ -98,15 +91,15 @@
 </div>
 
 <!-- Modal Settings -->
-<div class="modal fade" id="settings-modal-<%= @user.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">More Account Options</h4>
+        <h4 class="modal-title" id="settingsModalLabel">More Options</h4>
       </div>
       <div class="modal-body">
-        <%= link_to 'Acount Settings', edit_user_path(current_user.id),
+        <%= link_to 'Edit My Acount', edit_user_path(current_user.id),
               :class => ' btn btn-primary text-center btn-block'%>
       </div>
     </div>
