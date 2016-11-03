@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103033110) do
+ActiveRecord::Schema.define(version: 20161103063112) do
 
   create_table "events", force: :cascade do |t|
     t.datetime "date"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20161103033110) do
     t.string   "title"
     t.integer  "isprivate"
     t.integer  "like"
+    t.integer  "likes_count"
     t.index ["title"], name: "index_events_on_title"
     t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
     t.index ["user_id"], name: "index_events_on_user_id"

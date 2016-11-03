@@ -24,15 +24,6 @@ class EventsController < ApplicationController
 		end
 	end
 
-=begin
-	def liked_by
-		#@event = Event.find(params[:id])
-		Event.update_counters(params[:id], :like => 1)
-		flash[:success] = "Like Counted!"
-      	redirect_to :back
-	end
-=end
-
 	def like
 		@event = Event.find(params[:id])
 		Like.create(event: @event, user: current_user)

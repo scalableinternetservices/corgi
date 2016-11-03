@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#about'
   post '/search', to: 'pages#search'
 
-  get '/friend', to: 'pages#friend'
+  get '/explore', to: 'pages#explore'
   get '/signup', to: 'users#new'
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
@@ -29,7 +29,6 @@ Rails.application.routes.draw do
 
   resources :events, only: [:create, :destroy, :show, :edit, :update, :new] do
     member do
-      #post :liked_by
       post 'like'
     end
   end

@@ -1,0 +1,28 @@
+<div class="events-wrapper row">
+	<% if @events_top_likes %>
+	<% @events_top_likes.each do |event_top_like_item| %>
+		<%= render 'events/event', :event => event_top_like_item %>
+		<% end %>
+	<% end %>
+
+	<% if @events_with_same_tags %>
+		<% @events_with_same_tags.each do |event_with_same_tag_item| %>
+			<%= render 'events/event', :event => event_with_same_tag_item %>
+	  	<% end %>
+	  <% end %>  
+
+	<% if @events_nearby %>
+		<% @events_nearby.each do |event_nearby_item| %>
+			<%= render 'events/event', :event => event_nearby_item %>
+  		<% end %>
+  	<% end %>
+
+<% if false %>
+	<% if @explore_events %>
+		<% @explore_events.each do |event_item| %>
+			<%= render 'events/event', :event => event_item %>
+  		<% end %>
+  	<% end %>  
+<% end %>
+	
+</div>

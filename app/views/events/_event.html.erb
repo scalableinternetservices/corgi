@@ -34,7 +34,7 @@
     <span class="pull-right">
       <%= link_to like_event_path(event), method: 'post', remote: true do %>
         <i class="glyphicon glyphicon-thumbs-up"></i>
-        <span id="event_<%= event.id %>_likes"><%= event.likes.size %></span>
+        <span id="event_<%= event.id %>_likes"><%= event.likes_count %></span>
       <% end %>
     </span>
 
