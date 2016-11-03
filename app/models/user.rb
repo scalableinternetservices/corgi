@@ -21,6 +21,8 @@ class User < ApplicationRecord
                                   dependent: :destroy
     has_many :invites, through: :invite_relationships, source: :event
 
+    has_many :likes
+
 	
 	before_save { self.email = email.downcase }
 

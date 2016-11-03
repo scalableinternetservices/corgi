@@ -16,6 +16,7 @@ class Event < ApplicationRecord
   validates :location, presence: true
   acts_as_taggable_on :tags
 
+  has_many :likes
 
 
 
