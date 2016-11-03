@@ -30,6 +30,32 @@
         <%= link_to tag, search_path(:search => tag), method: :post %>
       <% end %>
     </div>
+    <!-- comments -->
+    <% if event.comments %>
+          <% event.comments.each do |comment| %>
+            <div class="comment">
+              <div class="user-name">
+                <%= comment.user.user_name %>
+                <b> says: </b>
+                <br>
+              </div>
+              <div class="comment-content">
+              <% if current_user?(comment.user) %>
+                <%= comment.content %>
+                <%= link_to "delete", event_comment_path(event, comment), method: :delete, data: { confirm: "Are you sure?" } %>
+              <% else %>
+                <%= comment.content %>
+              <% end %>
+              </div>
+            </div>
+        <% end %>
+        <% end %>
+        <div class="comment-form">
+          <%= form_for [event, event.comments.new] do |f| %>
+            <%= f.text_field :content, placeholder: 'Add a comment...' %>
+            <% end %>
+        </div>
+
     <% if current_user?(event.user) %>
       <div class="edit-link">
         <%= link_to "edit", edit_event_path(event) %> |
