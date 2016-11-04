@@ -14,6 +14,12 @@
     <div class="location">
       <span class="glyphicon glyphicon-globe"></span>
       <%= event.location %>
+      <span class="pull-right">
+        <%= link_to like_event_path(event), method: 'post', remote: true do %>
+          <i class="glyphicon glyphicon-thumbs-up"></i>
+          <span id="event_<%= event.id %>_likes"><%= event.likes_count %></span>
+        <% end %>
+      </span>
     </div>
 
     <div class="attending">
@@ -30,13 +36,6 @@
         <%= link_to tag, search_path(:search => tag), method: :post %>
       <% end %>
     </div>
-
-    <span class="pull-right">
-      <%= link_to like_event_path(event), method: 'post', remote: true do %>
-        <i class="glyphicon glyphicon-thumbs-up"></i>
-        <span id="event_<%= event.id %>_likes"><%= event.likes_count %></span>
-      <% end %>
-    </span>
 
     <% if current_user?(event.user) %>
       <div class="edit-link">
