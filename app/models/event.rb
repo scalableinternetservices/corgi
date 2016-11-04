@@ -2,7 +2,7 @@ class Event < ApplicationRecord
   belongs_to :user
   #location is geocoded
 
-  has_attached_file :picture, styles: { :large => '256x256#' }
+  has_attached_file :picture, styles: { :large => '640x400#' }
   validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
   geocoded_by :location
   after_validation :geocode

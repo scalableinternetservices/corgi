@@ -5,9 +5,9 @@ module EventsHelper
 
   	def events_picture_select(event)
     	if event.picture.exists?
-      		image_tag event.picture.url(:large), id: 'image-preview', class: 'img-responsive profile-image' 
+      	image_tag event.picture.url(:large), id: 'image-preview', class: 'img-responsive events-image' 
     	else
-      		image_tag 'default-event.png', id: 'image-preview', class: 'img-responsive profile-image'
+      	image_tag 'default-event.png', id: 'image-preview', class: 'img-responsive events-image'
    		end  
   	end
 end
