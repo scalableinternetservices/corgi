@@ -11,10 +11,10 @@ class PagesController < ApplicationController
       @can_be_seen_events = Event.can_be_seen_events(current_user)
       @tag_results = @can_be_seen_events.tagged_with(params[:search])
       # @location_results = can_be_seen_events.tagged_with(params[:search])
-      if params[:search] = 0
-        @location_results = nil
-      else
+      if params[:search].present? and not params[:search] = 0
         @location_results = @can_be_seen_events.near(params[:search], 5)
+      else
+        @location_results = nil
       end
       @user_results = User.where("user_name LIKE ?", "%#{params[:search]}%")
       @search_query = params[:search]
@@ -35,11 +35,11 @@ class PagesController < ApplicationController
         explore_event_ids += Event.tagged_with(event.tag_list, :any => true).where.not(:user_id => event.user.id).ids
       end
 
-      # @events_nearby: the events(created within 3 days till now) which are near to the current_user's events
-      # nearby_events = []
       current_user.events.where(:created_at => 3.days.ago..Time.now).each do |event|
-        nearby_events = events_can_be_seen.near(event.location, 50).where.not(:user_id => current_user.id)
-        explore_event_ids += (nearby_events.map {|event| event.id})
+        if event.location.present? and not event.location = 0
+          nearby_events = events_can_be_seen.near(event.location, 50).where.not(:user_id => current_user.id)
+          explore_event_ids += (nearby_events.map {|event| event.id})
+        end
       end
       @explore_events = Event.where(:id => explore_event_ids).distinct
     end

@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.float    "longitude"
     t.string   "title"
     t.integer  "isprivate"
-    t.integer  "like"
     t.integer  "likes_count"
     t.index ["title"], name: "index_events_on_title"
     t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
