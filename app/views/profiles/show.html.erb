@@ -46,7 +46,7 @@
         </span>
         <span><%= link_to "#{@user.following.count} <span class='profile-font-light'>Following </span>".html_safe, "#following-modal", :class => 'btn-link instagram profile-font-weight', "data-toggle" => "modal" %></span>
       </div>
-      <div>
+      <div class="profile-padding">
         <%= @user.name %>
       </div>
     </div>
