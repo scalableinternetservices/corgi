@@ -394,3 +394,39 @@ span.picture {
   }
 }
 
+
+.instagram, .instagram:hover{
+  
+  text-decoration: none;
+  color: inherit;
+
+}
+
+.profile-right-shift{
+  margin-right: 40px;
+}
+
+.profile-font-weight{
+  font-weight: 600;
+}
+
+.profile-font-light{
+  font-weight: 100 !important;
+}
+
+.profile-edit-button {
+  border-color: #818488;
+  color: #818488;
+}
+
+.profile-instagram-position{
+    background-repeat: no-repeat;
+    background-position: -308px -37px;
+    height: 44px;
+    width: 44px;
+}
+
+.profile-padding{
+  
+  padding-top: 15px;
+}

@@ -14,6 +14,9 @@
           <% if current_user?(@user) %>
 					  <%= link_to 'Edit Profile', edit_profile_path(@user.user_name),
 					    :class => 'btn edit-button' %>
+        
+            <%= link_to image_tag("instagramdot.gif"), "#settings-modal", :class => 'profile-instagram-position', "data-toggle" => "modal" %>
+
 					<% else %>
 					  <% if current_user.following?(@user) %>
 					    <%= link_to 'Following', unfollow_user_path, {
@@ -35,9 +38,16 @@
         <%= @user.background %>
       </p>
       <div class="user-statistics">
-        <p>
-          <%= pluralize @user.events.count, 'event' %>
-        </p>
+        <span class="profile-right-shift profile-font-weight"><%= @user.events.count %>
+          <span class="profile-font-light">Events
+          </span>
+        </span>
+        <span class="profile-right-shift"><%= link_to "#{@user.followers.count} <span class='profile-font-light'>Followers </span>".html_safe, "#followers-modal", :class => 'btn-link instagram profile-font-weight', "data-toggle" => "modal" %>
+        </span>
+        <span><%= link_to "#{@user.following.count} <span class='profile-font-light'>Following </span>".html_safe, "#following-modal", :class => 'btn-link instagram profile-font-weight', "data-toggle" => "modal" %></span>
+      </div>
+      <div class="profile-padding">
+        <%= @user.name %>
       </div>
     </div>
   </div>
@@ -48,3 +58,59 @@
 		<%= render 'events/event', :event => event %>
 	<% end %>
 </div>
+
+
+<!-- Modal Following-->
+<div class="modal fade" id="following-modal" tabindex="-1" role="dialog" aria-labelledby="followingModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="followingModalLabel"><%= "Following (#{@user.following.count})" %></h4>
+      </div>
+      <div class="modal-body">
+        <% @user.following.each do |user| %>
+          <%= render 'shared/user_info', :user => user %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Followers-->
+<div class="modal fade" id="followers-modal" tabindex="-1" role="dialog" aria-labelledby="followerModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="followerModalLabel"><%= "Followers (#{@user.following.count})" %></h4>
+      </div>
+      <div class="modal-body">
+        <% @user.followers.each do |user| %>
+          <%= render 'shared/user_info', :user => user %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Settings -->
+<div class="modal fade" id="settings-modal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="settingsModalLabel">More Options</h4>
+      </div>
+      <div class="modal-body">
+        <%= link_to 'Edit My Acount', edit_user_path(current_user.id),
+              :class => ' btn profile-edit-button text-center btn-block'%>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
