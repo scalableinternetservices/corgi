@@ -220,6 +220,12 @@ body {
   width: 152px;
 }
 
+.events-image {
+  margin: 20px auto;
+  height: 400px;
+  width: 640px;
+}
+
 .inline-profile-image {
   height: 50px;
   width: 50px;
@@ -394,6 +400,17 @@ span.picture {
   }
 }
 
+/*event pictures */
+
+.item{
+    background-color:#ccc;
+    display:block;
+}
+
+.carousel-caption{
+    color:#000;
+    position:static;
+}
 
 .instagram, .instagram:hover{
   
@@ -427,6 +444,5 @@ span.picture {
 }
 
 .profile-padding{
-  
   padding-top: 15px;
 }
