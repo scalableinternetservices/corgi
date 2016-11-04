@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/home/ec2-user/opt/tsung-1.5.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+	<clients>
+		<client host="localhost" use_controller_vm="true" maxusers="15000"/>
+	</clients>
+
+	<servers>
+		<server host="HOSTNAME_OR_IP_OF_APP_SERVER" port="80" type="tcp"/>
+	</servers>
+
+	<load>
+		<!-- debug with one user -->
+		<!-- <arrivalphase phase="1" duration="1" unit="second">
+			<users arrivalrate="1" unit="second"/>
+		</arrivalphase> -->
+
+		<!-- simple testing -->
+		<!-- <arrivalphase phase="1" duration="10" unit="second">
+			<users arrivalrate="1" unit="second"/>
+		</arrivalphase> -->
+		<!-- end simple testing -->
+
+		<!-- complex testing -->
+		<!-- phase 1: 30 secs, 1 user per sec -->
+		<!-- <arrivalphase phase="1" duration="30" unit="second">
+			<users arrivalrate="1" unit="second"></users>
+		</arrivalphase> -->
+
+		<!-- phase 2: 30 secs, 2 users per sec -->
+		<!-- <arrivalphase phase="2" duration="30" unit="second">
+			<users arrivalrate="2" unit="second"></users>
+		</arrivalphase> -->
+
+		<!-- phase 3: 30 secs, 4 users per sec -->
+		<!-- <arrivalphase phase="3" duration="30" unit="second">
+			<users arrivalrate="4" unit="second"></users>
+		</arrivalphase> -->
+		
+		<!-- phase 4: 30 secs, 8 users per sec -->
+		<!-- <arrivalphase phase="4" duration="30" unit="second">
+			<users arrivalrate="8" unit="second"></users>
+		</arrivalphase> -->
+		<!-- end complex testing -->
+	</load>
+
+	<options>
+		<option name="glocal_ack_timeout" value="2000"/>
+		<option type="ts_http" name="user_agent">
+			<user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511
+			Firefox/1.0.4</user_agent>
+		</option>
+	</options>
+
+	<sessions>
+		<session name="user-test-1" probability="100" type="ts_http">
+			<!-- setup some random variables -->
+	      	<setdynvars sourcetype="random_string" length="6">
+	        	<var name="new_user_name" />
+	      	</setdynvars>
+
+			<!-- get the root route -->
+			<request>
+				<http url="/" version="1.1" method="GET"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get signup page -->
+			<request>
+				<http url="/signup" version="1.1" method="GET"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- signup new user -->
+			<request subst="true">
+				<http url="/users"
+					version="1.1"
+					method="POST"
+					contents="user%5Bname%5D=%%_new_user_name%%&amp;
+							user%5Buser_name%5D=%%_new_user_name%%&amp;
+							user%5Bemail%5D=%%_new_user_name%%@gmail.com&amp;
+							user%5Bpassword%5D=password&amp;
+							user%5Bpassword_confirmation%5D=password&amp;
+							commit=Create+User"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- logout -->
+
+
+			<!-- login -->
+			<!-- <http url="/signin" version="1.1" method="GET"/> -->
+
+
+			<!-- edit background in profile -->
+			<request subst="true">
+				<http url="/%%_new_user_name%%/edit" version="1.1" method="GET"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- edit background in profile -->
+			<request subst="true">
+				<http url="/%%_new_user_name%%/edit" 
+					version="1.1" 
+					method="PATCH" 
+					contents="user%5Bbackground%5D=random%20background&amp;
+						commit=Update+Profile"/>
+			</request>
+
+			<!-- get new event form -->
+			<request>
+				<http url="/events/new" version="1.1" method="GET"/>
+			</request>
+
+			<!-- create an event -->
+			<!-- for date
+				2i = month
+				3i = day
+				1i = year
+				4i = hour (24 hr clock)
+				5i = mins
+			!-->
+			<request>
+				<dyn_variable name="created_event_url" re="[Ll]ocation: (http://.*)\r"/>
+				<dyn_variable name="created_event_id" re="[Ll]ocation: http://.*/events/(.*)\r"/>
+				<http url="/events" 
+					version="1.1"
+					method="POST"
+					contents="event%5Btitle%5D=christmas&amp;
+						event%5Bdate%282i%29%5D=12&amp;
+						event%5Bdate%283i%29%5D=25&amp;
+						event%5Bdate%281i%29%5D=2016&amp;
+						event%5Bdate%284i%29%5D=6&amp;
+						event%5Bdate%285i%29%5D=30&amp;
+						event%5Blocation%5D=north%20pole&amp;
+						commit=Create+Event" />
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get edit page for event -->
+			<request subst="true">
+				<http url="/events/%%_created_event_id%%/edit" 
+					version="1.1"
+					method="GET"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- edit event -->
+			<request subst="true">
+				<http url="/events/%%_created_event_id%%" 
+					version="1.1"
+					method="PATCH"
+					contents="event%5Bdescription%5D=a%20%23christmas%20party&amp;
+						commit=Update+Event" />
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- follow user1 (first result) -->
+			<request subst="true">
+				<http url="/user1/follow_user" 
+					version="1.1" 
+					method="POST"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- go to user1's profile -->
+			<request>
+				<http url="/user1" version="1.1" method="GET"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- join 2 of his events -->
+
+			<!-- leave one of them -->
+
+			<!-- sign out -->
+			<request>
+				<http url="/signout" version="1.1" method="DELETE"/>
+			</request>
+		</session>
+	</sessions>
+</tsung>
