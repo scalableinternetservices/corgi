@@ -11,7 +11,7 @@ class PagesController < ApplicationController
       @can_be_seen_events = Event.can_be_seen_events(current_user)
       @tag_results = @can_be_seen_events.tagged_with(params[:search])
       # @location_results = can_be_seen_events.tagged_with(params[:search])
-      @location_results = can_be_seen_events.near(params[:search].to_s, 5)
+      @location_results = @can_be_seen_events.near(params[:search].to_s, 5)
       @user_results = User.where("user_name LIKE ?", "%#{params[:search]}%")
       @search_query = params[:search]
     end
