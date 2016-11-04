@@ -8,8 +8,8 @@ class PagesController < ApplicationController
 
   def search
     if signed_in?
-      @can_be_seen_events = Event.can_be_seen_events(current_user)
-      @tag_results = @can_be_seen_events.tagged_with(params[:search])
+      can_be_seen_events = Event.can_be_seen_events(current_user)
+      @tag_results = can_be_seen_events.tagged_with(params[:search])
       # @location_results = can_be_seen_events.tagged_with(params[:search])
       @location_results = can_be_seen_events.near(params[:search].to_s, 5)
       @user_results = User.where("user_name LIKE ?", "%#{params[:search]}%")
