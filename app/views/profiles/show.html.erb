@@ -15,7 +15,7 @@
 					  <%= link_to 'Edit Profile', edit_profile_path(@user.user_name),
 					    :class => 'btn edit-button' %>
         
-            <%= link_to "&#8943;".html_safe, "#settings-modal", :class => 'btn edit-button', "data-toggle" => "modal" %>
+            <%= link_to image_tag("instagramdot.gif"), "#settings-modal", :class => 'profile-instagram-position', "data-toggle" => "modal" %>
 
 					<% else %>
 					  <% if current_user.following?(@user) %>
@@ -38,9 +38,13 @@
         <%= @user.background %>
       </p>
       <div class="user-statistics">
-        <span><%= pluralize @user.events.count, 'event' %></span>
-        <span><%= link_to "#{@user.followers.count} Followers", "#followers-modal", :class => 'btn-link', "data-toggle" => "modal" %></span>
-        <span><%= link_to "#{@user.following.count} Following", "#following-modal", :class => 'btn-link', "data-toggle" => "modal" %></span>
+        <span class="profile-right-shift profile-font-weight"><%= @user.events.count %>
+          <span class="profile-font-light">Events
+          </span>
+        </span>
+        <span class="profile-right-shift"><%= link_to "#{@user.followers.count} <span class='profile-font-light'>Followers </span>".html_safe, "#followers-modal", :class => 'btn-link instagram profile-font-weight', "data-toggle" => "modal" %>
+        </span>
+        <span><%= link_to "#{@user.following.count} <span class='profile-font-light'>Following </span>".html_safe, "#following-modal", :class => 'btn-link instagram profile-font-weight', "data-toggle" => "modal" %></span>
       </div>
       <div>
         <%= @user.name %>
@@ -100,7 +104,7 @@
       </div>
       <div class="modal-body">
         <%= link_to 'Edit My Acount', edit_user_path(current_user.id),
-              :class => ' btn btn-primary text-center btn-block'%>
+              :class => ' btn profile-edit-button text-center btn-block'%>
       </div>
     </div>
   </div>
