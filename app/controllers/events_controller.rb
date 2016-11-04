@@ -19,7 +19,7 @@ class EventsController < ApplicationController
 			end
 			redirect_to @event
 		else
-			
+			flash[:error] = @event.errors.full_messages.to_s
 			redirect_to root_path
 		end
 	end
@@ -56,6 +56,7 @@ class EventsController < ApplicationController
 			flash[:success] = "Event updated!"
 			redirect_to @event
 		else
+			flash[:error] = @event.errors.full_messages.to_s
 			render 'edit'
 		end
 	end
@@ -63,7 +64,7 @@ class EventsController < ApplicationController
 	private
 	  	def event_params
 	    	params.require(:event).permit(:title, :user, :date, :location,
-	                                   :description, :tag_list, :isprivate)
+	                                   :description, :tag_list, :isprivate, :picture)
 	  	end
 
 	  	def correct_user
