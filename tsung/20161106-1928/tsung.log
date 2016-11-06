@@ -1,8 +1,0 @@
-# stats: dump at 1478460499
-stats: users 0 0
-stats: {load,"tsung_controller@ip-172-31-7-152"} 1 0.0 0 0.0 0.0 0 0
-stats: {freemem,"tsung_controller@ip-172-31-7-152"} 1 3162.87890625 0 3162.87890625 3162.87890625 0 0
-stats: {cpu,"tsung_controller@ip-172-31-7-152"} 1 0.27476044105565467 0 0.27476044105565467 0.27476044105565467 0 0
-stats: users_count 0 0
-stats: finish_users_count 0 0
-EndMonitor:{1478,460499,904698}
