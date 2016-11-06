@@ -36,6 +36,6 @@ stats_out = ec2_shell.run(["tsung_stats.pl"], cwd=log_dir)
 print stats_out.output
 
 if copy_down:
-	local_shell.run(["scp", "-r", "-i", pem_file, log_dir, "."])
+	local_shell.run(["scp", "-r", "-i", "ec-2-user@" + tsung_host + ":" + pem_file, log_dir, "."])
 
 
