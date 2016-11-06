@@ -21,6 +21,8 @@ class User < ApplicationRecord
                                   dependent: :destroy
     has_many :invites, through: :invite_relationships, source: :event
 
+    has_many :likes
+
 	
 	before_save { self.email = email.downcase }
 
@@ -79,7 +81,7 @@ class User < ApplicationRecord
     end
 
     def feed
-        Event.from_users_followed_by(self)
+        Event.home_page_events(self)
     end
 
     def join(event)

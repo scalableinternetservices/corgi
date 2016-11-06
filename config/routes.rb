@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#about'
   post '/search', to: 'pages#search'
 
-  get '/friend', to: 'pages#friend'
+  get '/explore', to: 'pages#explore'
   get '/signup', to: 'users#new'
   get '/signin', to: 'sessions#new'
   post '/signin', to: 'sessions#create'
@@ -26,7 +26,13 @@ Rails.application.routes.draw do
   post ':user_name/follow_user', to: 'relationships#follow_user', as: :follow_user
   post ':user_name/unfollow_user', to: 'relationships#unfollow_user', as: :unfollow_user
 
-  resources :events, only: [:create, :destroy, :show, :edit, :update, :new]
+
+  resources :events, only: [:create, :destroy, :show, :edit, :update, :new] do
+    member do
+      post 'like'
+    end
+  end
+
   # resources :relationships, only: [:create, :destroy]
   resources :invites, only: [:create, :destroy]
 

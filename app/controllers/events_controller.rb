@@ -24,6 +24,17 @@ class EventsController < ApplicationController
 		end
 	end
 
+	def like
+		@event = Event.find(params[:id])
+		Like.create(event: @event, user: current_user)
+		respond_to do |format|
+      		format.html do
+      			redirect_to :back
+  			end
+  			format.js
+  		end
+	end
+
 	def destroy
 		@event.destroy
 		redirect_to profile_path(current_user.user_name)
