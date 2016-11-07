@@ -1,13 +1,14 @@
 class RelationshipsController < ApplicationController
 	before_action :signed_in_user
 
-
 	def follow_user
 	    @user = User.find_by(user_name: params[:user_name])
-	    if current_user.follow(@user)
-	      create_notification @user
+	    if current_user == @user
+	    	flash[:error] = "Can't follow yourself!"
+	    	redirect_to root_path
+	    elsif current_user.follow(@user)
 	      respond_to do |format|
-	        format.html { redirect_to root_path }
+	        format.html { redirect_to profile_path(@user) }
 	        format.js
 	      end
 	    end
@@ -15,7 +16,10 @@ class RelationshipsController < ApplicationController
 
   	def unfollow_user
 	    @user = User.find_by(user_name: params[:user_name])
-	    if current_user.unfollow(@user)
+	    if current_user == @user
+	    	flash[:error] = "Can't unfollow yourself!"
+	    	redirect_to root_path
+	    elsif current_user.unfollow(@user)
 	      respond_to do |format|
 	        format.html { redirect_to root_path }
 	        format.js
@@ -29,7 +33,7 @@ class RelationshipsController < ApplicationController
     		Notification.create(user_id: user.id,
                         notified_by_id: current_user.id,
                         event_id: '#',
-                        identifier: 'event_id',
-                        notice_type: 'follow')
+                        identifier: user.id,
+                        notice_type: 'comment')
   		end
 end

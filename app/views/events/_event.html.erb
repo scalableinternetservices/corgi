@@ -1,4 +1,5 @@
 <!-- no comments yet -->
+
 <div class="event">
   <div class="event-head">
     <%= link_to event.user.user_name, profile_path(event.user.user_name), :class => "user-name" %>
@@ -7,10 +8,39 @@
       <div class="time-ago"><%= time_ago_in_words(event.created_at) %></div>
     </div>
   </div>
-  <div class="map center-block">
-    <%= map_image(event) %>
-  </div>
 
+  <% if event.picture.exists? %>
+    <div id="carousel-generic<%= event.id %>" class="carousel slide" data-ride="carousel" data-interval="false">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-generic<%= event.id %>" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-generic<%= event.id %>" data-slide-to="1"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item item active">
+          <div class="carousel-caption map" alt="First Slide">
+            <%= map_image(event) %>
+          </div>
+        </div>
+        <div class="carousel-item item">
+          <div class="carousel-caption" alt="Second Slide">
+            <%= events_picture_select(event) %>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#carousel-generic<%= event.id %>" role="button" data-slide="prev">
+        <span class="icon-prev" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#carousel-generic<%= event.id %>" role="button" data-slide="next">
+        <span class="icon-next" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  <% else %>
+    <div class="map center-block">
+    <%= map_image(event) %>
+    </div>
+  <% end %>
   <div class="event-bottom">
     <div class="location">
       <span class="glyphicon glyphicon-globe"></span>
@@ -19,7 +49,7 @@
 
     <div class="attending">
       <span class="glyphicon glyphicon-user"></span>
-      <%= event.guests.count %> Attending
+      <%= link_to "#{event.guests.count} Attending", "#attending-modal-#{event.id}", :class => 'btn-link', "data-toggle" => "modal" %>
     </div>
 
     <div class="description">
@@ -74,5 +104,22 @@
         <% end %>
       <% end %>
     <% end %>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="attending-modal-<%= event.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= "#{pluralize(event.guests.count, 'Guest')}" %></h4>
+      </div>
+      <div class="modal-body">
+        <% event.guests.each do |user| %>
+          <%= render 'shared/user_info', :user => user %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

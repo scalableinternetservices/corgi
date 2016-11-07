@@ -1,7 +1,9 @@
 class User < ApplicationRecord
     attr_accessor :remember_token
 
-    has_attached_file :avatar, styles: { medium: '152x152#' }
+
+    has_attached_file :avatar, styles: { :medium => '152x152#', :small => '40x40#' }
+
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
 
     has_many :events, dependent: :destroy

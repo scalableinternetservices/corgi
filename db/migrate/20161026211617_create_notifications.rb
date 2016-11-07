@@ -4,6 +4,8 @@ class CreateNotifications < ActiveRecord::Migration[5.0]
       t.references :user, index: true
       t.references :notified_by, index: true
       t.references :event, index: true
+      t.references :relationship, index: true
+
       t.integer :identifier
       t.string :notice_type
       t.boolean :read, default: false
