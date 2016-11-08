@@ -1,3 +1,4 @@
+<% cache(cache_key_for_event(event)) do %>
 <div class="event">
   <div class="event-head">
     <%= link_to event.user.user_name, profile_path(event.user.user_name), :class => "user-name" %>
@@ -103,3 +104,4 @@
     </div>
   </div>
 </div>
+<% end %>

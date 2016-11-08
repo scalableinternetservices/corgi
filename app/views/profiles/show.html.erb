@@ -1,3 +1,4 @@
+<% cache(cache_key_for_profile(user)) do %>
 <div class="events-wrapper">
   <div class="row events-header">
     <div class="col-md-6">
@@ -16,7 +17,6 @@
 					    :class => 'btn edit-button' %>
         
             <%= link_to image_tag("instagramdot.gif"), "#settings-modal", :class => 'profile-instagram-position', "data-toggle" => "modal" %>
-
 					<% else %>
 					  <% if current_user.following?(@user) %>
 					    <%= link_to 'Following', unfollow_user_path, {
@@ -53,6 +53,7 @@
   </div>
 
 	<hr>
+  <% end %>
 
 	<% @events.each do |event| %>
 		<%= render 'events/event', :event => event %>
@@ -106,9 +107,7 @@
         "<% @user.following.each do |user| %><%= j render 'shared/user_info', :user => user %><% end %>"
       );
   });
-
 </script>
-
 
 
 

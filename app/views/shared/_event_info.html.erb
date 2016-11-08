@@ -1,3 +1,4 @@
+<% cache(cache_key_for_event_info(event)) do %>
 <div class="info-wrapper row">
 	<div class="col-md-3">
 		<%= inline_avatar_select(event.user) %>
@@ -29,3 +30,4 @@
 	</div>
 </div>
 <hr>
+<% end %>

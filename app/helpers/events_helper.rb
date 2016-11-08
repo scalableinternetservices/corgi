@@ -10,4 +10,22 @@ module EventsHelper
       	image_tag 'default-event.png', id: 'image-preview', class: 'img-responsive events-image'
    		end  
   	end
+
+  def cache_key_for_event(event)
+    if event.guests.count > 0
+      newest_relationship = Invite.where(:event_id => event.id).maximum(:created_at)
+      "event-#{event.id}-#{event.updated_at}-#{event.guests.count}-#{newest_relationship}"
+    else
+      "event-#{event.id}-#{event.updated_at}-#{event.guests.count}"
+    end
+  end
+
+  def cache_key_for_event_info(event)
+    if event.guests.count > 0
+      newest_relationship = Invite.where(:event_id => event.id).maximum(:created_at)
+      "event-info-#{event.id}-#{event.updated_at}-#{event.guests.count}-#{newest_relationship}"
+    else
+      "event-info-#{event.id}-#{event.updated_at}-#{event.guests.count}"
+    end
+  end
 end

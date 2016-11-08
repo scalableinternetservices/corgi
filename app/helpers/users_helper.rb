@@ -7,5 +7,15 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     image_tag(gravatar_url, alt: user.name, class: "gravatar")
   end
+
+  def cache_key_for_user_info(user)
+  	if current_user?(user)
+  		"user-info-#{user.id}-#{user.updated_at}-current"
+  	elsif current_user.following?(user)
+  		"user-info-#{user.id}-#{user.updated_at}-following"
+  	else
+  		"user-info-#{user.id}-#{user.updated_at}-not"
+  	end
+  end
   
 end
