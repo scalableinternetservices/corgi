@@ -9,7 +9,7 @@ class EventsController < ApplicationController
 	def create
 		@event = current_user.events.build(event_params) 
 		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")} if @event.description
-
+		@event.likes_count = 0
 		if @event.save
 			current_user.join(@event)
 			if @event.isprivate == true

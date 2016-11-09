@@ -28,7 +28,8 @@ users = User.order(:created_at)
                         date: date,
                         location: location,
                         description: description,
-                        isprivate: 0)
+                        isprivate: 0,
+                        likes_count: 0)
   end
 end
 

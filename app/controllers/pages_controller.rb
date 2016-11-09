@@ -26,7 +26,7 @@ class PagesController < ApplicationController
       explore_event_ids = []
 
       # @events_top_likes: 10 events with top likes
-      explore_event_ids += events_can_be_seen.order(:likes_count).where.not(:user_id => current_user.id).ids.first(10)
+      explore_event_ids += events_can_be_seen.unscoped.order(likes_count: :desc).where.not(:user_id => current_user.id).ids.first(10)
 
       # @events_with_same_tags: the events with same tags as current_user
       current_user.events.each do |event|
