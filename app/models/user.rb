@@ -1,9 +1,7 @@
 class User < ApplicationRecord
     attr_accessor :remember_token
 
-
     has_attached_file :avatar, styles: { :medium => '152x152#', :small => '40x40#' }
-
     validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
 
     has_many :events, dependent: :destroy
@@ -25,7 +23,7 @@ class User < ApplicationRecord
                                   dependent: :destroy
     has_many :invites, through: :invite_relationships, source: :event
 
-    has_many :comments, dependent: :destroy
+    has_many :likes
 
 	
 	before_save { self.email = email.downcase }
@@ -85,7 +83,7 @@ class User < ApplicationRecord
     end
 
     def feed
-        Event.from_users_followed_by(self)
+        Event.home_page_events(self)
     end
 
     def join(event)

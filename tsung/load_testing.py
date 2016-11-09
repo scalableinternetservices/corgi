@@ -1,3 +1,5 @@
+
+#!/usr/bin/env python
 import sys
 import spur
 import spur.ssh
@@ -11,7 +13,8 @@ testing_script = sys.argv[2]
 tsung_host = sys.argv[3]
 tsung_home_dir = "ec2-user@{0}:~".format(tsung_host)
 copy_down = False
-if sys.argv[4] && sys.argv[4] == "true":
+
+if sys.argv[4] and sys.argv[4] == "true":
 	copy_down = True
 
 local_shell = spur.LocalShell()
@@ -36,6 +39,6 @@ stats_out = ec2_shell.run(["tsung_stats.pl"], cwd=log_dir)
 print stats_out.output
 
 if copy_down:
-	local_shell.run(["scp", "-r", "-i", pem_file, log_dir, "."])
+	local_shell.run(["scp", "-r", "-i", pem_file, "ec2-user@" + tsung_host + ":" + log_dir, "."])
 
 

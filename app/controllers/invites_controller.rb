@@ -12,4 +12,5 @@ class InvitesController < ApplicationController
 	    current_user.leave(event)
 	    redirect_to root_path
 	end
+
 end

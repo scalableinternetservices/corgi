@@ -10,4 +10,10 @@
 	<% @user_results.each do |user| %>
 		<%= render 'shared/user_info', user: user %>
 	<% end %>
+
+	<h2>Events (<%= @location_results.to_a.count %>)</h2>
+	<% @location_results.to_a.each do |event| %>
+		<%= render 'shared/event_info', event: event %>
+	<% end %>
+
 </div>

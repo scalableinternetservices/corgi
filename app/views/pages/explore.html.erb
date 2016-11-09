@@ -1,0 +1,6 @@
+<div class="events-wrapper">
+	<h3>Discover Events</h3>
+	<% @explore_events.each do |event_item| %>
+		<%= render 'events/event', :event => event_item %>
+	<% end %>
+</div>

@@ -24,7 +24,7 @@ class Event < ApplicationRecord
   validates :location, presence: true
   acts_as_taggable_on :tags
 
-
+  has_many :likes
 
 
   def self.from_users_followed_by(user)
@@ -41,7 +41,7 @@ class Event < ApplicationRecord
                   ON A.follower_id = B.followed_id
                   WHERE A.followed_id = B.follower_id AND A.follower_id = :user_id"
 
-    where("user_id IN (#{friend_ids}) OR isprivate = :private OR user_id = :user_id", private: false, user_id: user.id)
+    where("user_id IN (#{friend_ids}) OR isprivate = :private OR user_id = :user_id", private: 0, user_id: user.id)
   end
 
   def self.home_page_events(user)

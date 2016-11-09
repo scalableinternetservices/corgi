@@ -12,26 +12,26 @@
         </h3>
         <span>
           <% if current_user?(@user) %>
-            <%= link_to 'Edit Profile', edit_profile_path(@user.user_name),
-              :class => 'btn edit-button' %>
+					  <%= link_to 'Edit Profile', edit_profile_path(@user.user_name),
+					    :class => 'btn edit-button' %>
         
             <%= link_to image_tag("instagramdot.gif"), "#settings-modal", :class => 'profile-instagram-position', "data-toggle" => "modal" %>
 
-          <% else %>
-            <% if current_user.following?(@user) %>
-              <%= link_to 'Following', unfollow_user_path, {
-                :remote => true,
-                :class => "btn unfollow-button",
-                :id => "unfollow-button-#{@user.id}",
-                :method => :post } %>
-            <% else %>
-              <%= link_to 'Follow', follow_user_path,
-                { :remote => true, 
-                  :class => 'btn follow-button', 
-                  :id => "follow-button-#{@user.id}", 
-                  :method => :post } %>
-            <% end %>
-          <% end %>
+					<% else %>
+					  <% if current_user.following?(@user) %>
+					    <%= link_to 'Following', unfollow_user_path, {
+					      :remote => true,
+					      :class => "btn unfollow-button",
+					      :id => "unfollow-button-#{@user.id}",
+					      :method => :post } %>
+					  <% else %>
+					    <%= link_to 'Follow', follow_user_path,
+					      { :remote => true, 
+					      	:class => 'btn follow-button', 
+					      	:id => "follow-button-#{@user.id}", 
+					      	:method => :post } %>
+					  <% end %>
+					<% end %>
         </span>
       </div>
       <p class="profile-bio">
@@ -52,11 +52,11 @@
     </div>
   </div>
 
-  <hr>
+	<hr>
 
-  <% @events.each do |event| %>
-    <%= render 'events/event', :event => event %>
-  <% end %>
+	<% @events.each do |event| %>
+		<%= render 'events/event', :event => event %>
+	<% end %>
 </div>
 
 <!-- Modal Followers-->
@@ -99,10 +99,12 @@
         "<% @user.followers.each do |user| %><%= j render 'shared/user_info', :user => user %><% end %>"
       );
   });
+
   $('#following-toggle').on('click', function(e){
     $('#follow-modal-label').text("Following (<%= @user.following.count %>)");
     $('#follow-modal-body').html(
         "<% @user.following.each do |user| %><%= j render 'shared/user_info', :user => user %><% end %>"
       );
   });
+
 </script>

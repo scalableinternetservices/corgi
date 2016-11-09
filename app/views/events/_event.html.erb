@@ -1,4 +1,3 @@
-<!-- no comments yet -->
 
 <div class="event">
   <div class="event-head">
@@ -45,6 +44,12 @@
     <div class="location">
       <span class="glyphicon glyphicon-globe"></span>
       <%= event.location %>
+      <span class="pull-right">
+        <%= link_to like_event_path(event), method: 'post', remote: true do %>
+          <i class="glyphicon glyphicon-thumbs-up"></i>
+          <span id="event_<%= event.id %>_likes"><%= event.likes_count %></span>
+        <% end %>
+      </span>
     </div>
 
     <div class="attending">
@@ -55,6 +60,7 @@
     <div class="description">
       <%= event.description %>
     </div>
+
     <div class="tag-list">
       <% event.tag_list.each do |tag| %>
         <%= link_to tag, search_path(:search => tag), method: :post %>

@@ -24,6 +24,18 @@ class EventsController < ApplicationController
 		end
 	end
 
+	def like
+		@event = Event.find(params[:id])
+		Like.create(event: @event, user: current_user)
+		create_notification @event, @like
+		respond_to do |format|
+      		format.html do
+      			redirect_to :back
+  			end
+  			format.js
+  		end
+	end
+
 	def destroy
 		@event.destroy
 		redirect_to profile_path(current_user.user_name)
@@ -53,7 +65,6 @@ class EventsController < ApplicationController
 	private
 	  	def event_params
 	    	params.require(:event).permit(:title, :user, :date, :location,
-
 	                                   :description, :tag_list, :isprivate, :picture)
 	  	end
 
@@ -61,6 +72,16 @@ class EventsController < ApplicationController
 	      @event = current_user.events.find_by_id(params[:id])
 	      redirect_to root_path if @event.nil?
 	    end
+
+	    def create_notification(event, like)
+    		return if event.user.id == current_user.id
+    		Notification.create(user_id: event.user.id,
+                        notified_by_id: current_user.id,
+                        event_id: event.id,
+                        identifier: event.id,
+                        notice_type: 'like')
+  		end 
+
 
 	    def set_post
     		@event = Event.find(params[:id])

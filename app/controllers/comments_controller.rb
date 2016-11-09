@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
                         notified_by_id: current_user.id,
                         event_id: event.id,
                         identifier: comment.id,
-                        notice_type: 'comment')
+                        notice_type: 'commente')
   		end 
 
 		 
