@@ -4,6 +4,7 @@ class EventsController < ApplicationController
 
 	def new
 		@event = Event.new
+		expires_in 1.hour, :public => true
 	end
 
 	def create
@@ -42,6 +43,7 @@ class EventsController < ApplicationController
 
 	def show
 		@event = Event.find(params[:id])
+		fresh_when last_modified: @event.updated_at.utc, etag: @event
 	end
 
 	def edit

@@ -10,6 +10,8 @@ class ProfilesController < ApplicationController
         else
           @events = User.find_by(user_name: params[:user_name]).events.where("isprivate = 0").order('created_at DESC')
         end
+        # will 'follow' change the user's updated_at??
+        fresh_when last_modified: [@user.updated_at.utc, @events.maximum(:updated_at)].max, etag: [@user, @events.first]
       else
         redirect_to root_path
       end
