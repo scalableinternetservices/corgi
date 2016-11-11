@@ -9,10 +9,12 @@ class PagesController < ApplicationController
   def search
     if signed_in?
       @can_be_seen_events = Event.can_be_seen_events(current_user)
-      @tag_results = @can_be_seen_events.tagged_with(params[:search])
+      @tag_results = @can_be_seen_events.tagged_with(params[:search]).includes(:user)
+      #@tag_results = @can_be_seen_events.tagged_with(params[:search]).joins(:user).select("events.*, users.name as user_name")
       @location_results
       if params[:search].present? and Geocoder.coordinates(params[:search])
-        @location_results = @can_be_seen_events.near(params[:search], 5)
+        @location_results = @can_be_seen_events.near(params[:search], 5).includes(:user)
+        #@location_results = @can_be_seen_events.near(params[:search], 5)
       end
       @user_results = User.where("user_name LIKE ?", "%#{params[:search]}%")
       @search_query = params[:search]
@@ -39,7 +41,7 @@ class PagesController < ApplicationController
           explore_event_ids += (nearby_events.map {|event| event.id})
         end
       end
-      @explore_events = Event.where(:id => explore_event_ids).distinct
+      @explore_events = Event.where(:id => explore_event_ids).distinct.includes(:user)
     end
   end
 

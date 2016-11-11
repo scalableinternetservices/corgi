@@ -1,16 +1,16 @@
 <div class="events-wrapper">
-	<h2>Tags (<%= @tag_results.count %>)</h2>
+	<h2>Tags (<%= @tag_results.size %>)</h2>
 	<% @tag_results.each do |event| %>
 		<%= render 'shared/event_info', event: event %>
 	<% end %>
 
 
-	<h2>Users (<%= @user_results.count %>)</h2>
+	<h2>Users (<%= @user_results.size %>)</h2>
 	<% @user_results.each do |user| %>
 		<%= render 'shared/user_info', user: user %>
 	<% end %>
 
-	<h2>Events (<%= @location_results.to_a.count %>)</h2>
+	<h2>Events (<%= @location_results.to_a.size %>)</h2>
 	<% @location_results.to_a.each do |event| %>
 		<%= render 'shared/event_info', event: event %>
 	<% end %>

@@ -6,9 +6,9 @@ class ProfilesController < ApplicationController
       @user = User.find_by(user_name: params[:user_name])
       if @user
         if current_user?(@user) || current_user.is_friend?(@user)
-          @events = User.find_by(user_name: params[:user_name]).events.order('created_at DESC')
+          @events = User.find_by(user_name: params[:user_name]).events.order('created_at DESC').includes(:user)
         else
-          @events = User.find_by(user_name: params[:user_name]).events.where("isprivate = 0").order('created_at DESC')
+          @events = User.find_by(user_name: params[:user_name]).events.where("isprivate = 0").order('created_at DESC').includes(:user)
         end
       else
         redirect_to root_path
