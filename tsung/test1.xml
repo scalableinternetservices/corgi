@@ -213,14 +213,14 @@
 			<thinktime value="2" random="true"></thinktime>
 
 			<!-- join created event -->
-			<request subst="true">
+			<!-- <request subst="true">
 				<http url="/invites"
 					version="1.1"
 					method="POST"
 					contents="event_id=%%_created_event_id%%&amp;
 							commit=Join"/>
 			</request>
-			<thinktime value="2" random="true"></thinktime>
+			<thinktime value="2" random="true"></thinktime> -->
 
 			<!-- like created event -->
 			<request subst="true">
