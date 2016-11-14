@@ -26,8 +26,15 @@ class EventsController < ApplicationController
 
 	def like
 		@event = Event.find(params[:id])
-		Like.create(event: @event, user: current_user)
-		create_notification @event, @like
+		existing_like = Like.find_by({:event => @event, :user => current_user})
+		if existing_like.nil?
+			like = Like.create(event: @event, user: current_user)
+			unless like.nil? and current_user?(@event.user)
+				create_notification(@event) 
+			end
+		else
+			existing_like.destroy
+		end
 		respond_to do |format|
       		format.html do
       			redirect_to :back
@@ -73,17 +80,10 @@ class EventsController < ApplicationController
 	      redirect_to root_path if @event.nil?
 	    end
 
-	    def create_notification(event, like)
-    		return if event.user.id == current_user.id
+	    def create_notification(event)
     		Notification.create(user_id: event.user.id,
                         notified_by_id: current_user.id,
                         event_id: event.id,
-                        identifier: event.id,
-                        notice_type: 'like')
-  		end 
-
-
-	    def set_post
-    		@event = Event.find(params[:id])
+                        notice_type: Notification.notice_types[:like])
   		end
 end

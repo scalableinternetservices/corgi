@@ -1,19 +1,16 @@
 class CreateNotifications < ActiveRecord::Migration[5.0]
-   def change
+  def change
     create_table :notifications do |t|
-      t.references :user, index: true
-      t.references :notified_by, index: true
-      t.references :event, index: true
-      t.references :relationship, index: true
-
-      t.integer :identifier
-      t.string :notice_type
+      t.references :user
+      t.references :notified_by
+      t.integer :event_id
+      t.integer :notice_type
       t.boolean :read, default: false
-
-      t.timestamps null: false
+      t.timestamps
     end
+
     add_foreign_key :notifications, :users
     add_foreign_key :notifications, :users, column: :notified_by_id
-    add_foreign_key :notifications, :events
+    add_index :notifications, [:user_id, :notified_by_id, :event_id]
   end
 end

@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "title"
-    t.boolean  "isprivate"
+    t.integer  "isprivate"
     t.string   "picture_file_name"
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
@@ -65,13 +65,12 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.integer  "user_id"
     t.integer  "notified_by_id"
     t.integer  "event_id"
-    t.integer  "identifier"
-    t.string   "notice_type"
+    t.integer  "notice_type"
     t.boolean  "read",           default: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.index ["event_id"], name: "index_notifications_on_event_id"
     t.index ["notified_by_id"], name: "index_notifications_on_notified_by_id"
+    t.index ["user_id", "notified_by_id", "event_id"], name: "index_notifications_on_user_id_and_notified_by_id_and_event_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 

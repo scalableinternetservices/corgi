@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-
 	before_action :set_event
 
 	def create  
@@ -20,16 +19,13 @@ class CommentsController < ApplicationController
 
 	    if @comment.user_id == current_user.id
 	      @comment.delete
-	      flash[:notice] = 'Comment deleted.'
-	      redirect_to root_path
-	    else
-	      flash[:warning] = "That doesn't belong to you!"
-	      redirect_to root_path
 	    end
+
+	    flash[:notice] = 'Comment deleted.'
+	    redirect_to root_path
   	end
 
 	private
-
 		def comment_params  
 		  params.require(:comment).permit(:content)
 		end
@@ -39,8 +35,7 @@ class CommentsController < ApplicationController
     		Notification.create(user_id: event.user.id,
                         notified_by_id: current_user.id,
                         event_id: event.id,
-                        identifier: comment.id,
-                        notice_type: 'commente')
+                        notice_type: Notification.notice_types[:comment])
   		end 
 
 		 
