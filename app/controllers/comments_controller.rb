@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
 
 	  if @comment.save
 	     create_notification @event, @comment
-	     redirect_to :back
+	     redirect_back(fallback_location: root_path)
 	  else
 	    flash[:alert] = "Comment post unsuccessful :("
 	    render root_path
