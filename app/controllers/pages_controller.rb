@@ -2,29 +2,44 @@ class PagesController < ApplicationController
   def home
   	if signed_in?
   		@event = current_user.events.build
-  		@feed_items = current_user.feed.paginate(page: params[:page])
+  		@feed_items = current_user.feed
   	end
   end
 
   def search
     if signed_in?
-      can_be_seen_events = Event.can_be_seen_events(current_user)
-      @tag_results = can_be_seen_events.tagged_with(params[:search]).paginate(page: params[:page])
-      @location_results = can_be_seen_events.tagged_with(params[:search]).paginate(page: params[:page])
-      # @location_results = can_be_seen_events.near(params[:search], 5).paginate(page: params[:page])
+      @can_be_seen_events = Event.can_be_seen_events(current_user)
+      @tag_results = @can_be_seen_events.tagged_with(params[:search])
+      @location_results
+      if params[:search].present? and Geocoder.coordinates(params[:search])
+        @location_results = @can_be_seen_events.near(params[:search], 5)
+      end
       @user_results = User.where("user_name LIKE ?", "%#{params[:search]}%")
       @search_query = params[:search]
     end
   end
 
-  def friend
+  def explore
     if signed_in?
-      #@friends = User.friends(@user)
-      @temp = Event.all_events_from_friends(current_user)
-      @temp.sort_by{|e| e.created_at}
-      @friend_events = @temp.paginate(page: params[:page])
-      @user = current_user
-      render 'pages/friend'
+      events_can_be_seen = Event.can_be_seen_events(current_user)
+
+      explore_event_ids = []
+
+      # @events_top_likes: 10 events with top likes
+      explore_event_ids += events_can_be_seen.unscoped.order(likes_count: :desc).where.not(:user_id => current_user.id).ids.first(10)
+
+      # @events_with_same_tags: the events with same tags as current_user
+      current_user.events.each do |event|
+        explore_event_ids += Event.tagged_with(event.tag_list, :any => true).where.not(:user_id => event.user.id).ids
+      end
+
+      current_user.events.where(:created_at => 3.days.ago..Time.now).each do |event|
+        if event.location.present? and Geocoder.coordinates(params[:search])
+          nearby_events = events_can_be_seen.near(event.location, 50).where.not(:user_id => current_user.id)
+          explore_event_ids += (nearby_events.map {|event| event.id})
+        end
+      end
+      @explore_events = Event.where(:id => explore_event_ids).distinct
     end
   end
 
