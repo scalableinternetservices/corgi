@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  follower: one
+  event: one
+  identifier: 1
+  type: 
+  read: false
+
+two:
+  user: two
+  follower: two
+  event: two
+  identifier: 1
+  type: 
+  read: false

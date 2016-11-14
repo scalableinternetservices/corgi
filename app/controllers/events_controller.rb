@@ -9,7 +9,7 @@ class EventsController < ApplicationController
 	def create
 		@event = current_user.events.build(event_params) 
 		@event.tag_list = @event.description.split(" ").select {|word| word.start_with?("#")} if @event.description
-
+		@event.likes_count = 0
 		if @event.save
 			current_user.join(@event)
 			if @event.isprivate == true
@@ -26,7 +26,15 @@ class EventsController < ApplicationController
 
 	def like
 		@event = Event.find(params[:id])
-		Like.create(event: @event, user: current_user)
+		existing_like = Like.find_by({:event => @event, :user => current_user})
+		if existing_like.nil?
+			like = Like.create(event: @event, user: current_user)
+			unless like.nil? and current_user?(@event.user)
+				create_notification(@event) 
+			end
+		else
+			existing_like.destroy
+		end
 		respond_to do |format|
       		format.html do
       			redirect_to :back
@@ -71,4 +79,11 @@ class EventsController < ApplicationController
 	      @event = current_user.events.find_by_id(params[:id])
 	      redirect_to root_path if @event.nil?
 	    end
+
+	    def create_notification(event)
+    		Notification.create(user_id: event.user.id,
+                        notified_by_id: current_user.id,
+                        event_id: event.id,
+                        notice_type: Notification.notice_types[:like])
+  		end
 end
