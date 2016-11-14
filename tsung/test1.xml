@@ -249,8 +249,14 @@
 			<thinktime value="2" random="true"></thinktime>
 
 			<!-- comment on created event -->
+			<request subst="true">
+				<http url="/events/%%_created_event_id%%/comment"
+					version="1.1"
+					method="POST"
+					contents="comment%5Bcontent%5D=helooooo&amp;
+							commit=Comment"/>
+			</request>
 			<thinktime value="2" random="true"></thinktime>
-
 		
 			<!-- get the explore page -->
 			<request>
@@ -258,9 +264,9 @@
 			</request>
 			<thinktime value="2" random="true"></thinktime>
 
-			<!-- get the home page -->
+			<!-- get notifications page -->
 			<request>
-				<http url="/" version="1.1" method="GET"/>
+				<http url="/notifications" version="1.1" method="GET"/>
 			</request>
 			<thinktime value="2" random="true"></thinktime>
 
@@ -272,7 +278,7 @@
 
 
 		<!-- original user-test session -->
-		<session name="user-test-1" probability="100" type="ts_http">
+		<session name="user-test-1" probability="0" type="ts_http">
 			<!-- setup some random variables -->
 	      	<setdynvars sourcetype="random_string" length="6">
 	        	<var name="new_user_name" />
