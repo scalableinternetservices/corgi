@@ -1,4 +1,5 @@
 <div class="events-wrapper">
+
 	<h2>Tags (<%= @tag_results.count %>)</h2>
 	<% @tag_results.each do |event| %>
 		<%= render 'shared/event_info', event: event %>

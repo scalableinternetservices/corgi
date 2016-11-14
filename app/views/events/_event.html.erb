@@ -66,6 +66,24 @@
       <% end %>
     </div>
 
+    <% event.comments.each do |comment| %>
+      <div class="comment">
+        <div class="comment-user-name">
+          <b><%= comment.user.user_name %></b>
+          <%= comment.content %>
+          <% if current_user?(comment.user) %>
+            <%= link_to "delete", event_comment_path(event, comment), method: :delete, data: { confirm: "Are you sure?" } %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="comment-form">
+      <%= form_for [event, event.comments.new] do |f| %>
+        <%= f.text_field :content, placeholder: 'Add a comment...', :class => "comment-input" %>
+        <% end %>
+    </div>
+
     <% if current_user?(event.user) %>
       <div class="edit-link">
         <%= link_to "edit", edit_event_path(event) %> |
