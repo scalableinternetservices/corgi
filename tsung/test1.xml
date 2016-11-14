@@ -250,17 +250,11 @@
 
 			<!-- comment on created event -->
 			<request subst="true">
-				<http url="/events/%%_created_event_id%%/comment"
+				<http url="/events/%%_created_event_id%%/comments"
 					version="1.1"
 					method="POST"
 					contents="comment%5Bcontent%5D=helooooo&amp;
 							commit=Comment"/>
-			</request>
-			<thinktime value="2" random="true"></thinktime>
-		
-			<!-- get the explore page -->
-			<request>
-				<http url="/explore" version="1.1" method="GET"/>
 			</request>
 			<thinktime value="2" random="true"></thinktime>
 
