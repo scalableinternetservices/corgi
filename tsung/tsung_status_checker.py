@@ -4,7 +4,7 @@ import time
 import spur.ssh
 
 if (len(sys.argv) < 5):
-	print "Usage py tsung_status_checker <pem_file> <tsung_host> <ping_interval> <ping_count>"
+	print "Usage python tsung_status_checker <pem_file> <tsung_host> <ping_interval> <ping_count>"
 	exit(1)
 
 pem_file = sys.argv[1]
