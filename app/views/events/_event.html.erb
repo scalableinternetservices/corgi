@@ -6,44 +6,118 @@
       <div class="time-ago"><%= time_ago_in_words(event.created_at) %></div>
     </div>
   </div>
-  <div class="map center-block">
-    <%= map_image(event) %>
-  </div>
 
+  <% if event.picture.exists? %>
+    <div id="carousel-generic<%= event.id %>" class="carousel slide" data-ride="carousel" data-interval="false">
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-generic<%= event.id %>" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-generic<%= event.id %>" data-slide-to="1"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <div class="carousel-item item active">
+          <div class="carousel-caption map" alt="First Slide">
+            <%= map_image(event) %>
+          </div>
+        </div>
+        <div class="carousel-item item">
+          <div class="carousel-caption" alt="Second Slide">
+            <%= events_picture_select(event) %>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#carousel-generic<%= event.id %>" role="button" data-slide="prev">
+        <span class="icon-prev" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#carousel-generic<%= event.id %>" role="button" data-slide="next">
+        <span class="icon-next" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  <% else %>
+    <div class="map center-block">
+    <%= map_image(event) %>
+    </div>
+  <% end %>
   <div class="event-bottom">
     <div class="location">
       <span class="glyphicon glyphicon-globe"></span>
       <%= event.location %>
+      <span class="pull-right">
+        <%= link_to like_event_path(event), method: 'post', remote: true do %>
+          <i class="glyphicon glyphicon-thumbs-up"></i>
+          <span id="event_<%= event.id %>_likes"><%= event.likes_count %></span>
+        <% end %>
+      </span>
     </div>
 
     <div class="attending">
       <span class="glyphicon glyphicon-user"></span>
-      <%= event.guests.count %> Attending
+      <%= link_to "#{event.guests.count} Attending", "#attending-modal-#{event.id}", :class => 'btn-link', "data-toggle" => "modal" %>
     </div>
 
     <div class="description">
       <%= event.description %>
     </div>
+
     <div class="tag-list">
-      <%= event.tag_list %>
+      <% event.tag_list.each do |tag| %>
+        <%= link_to tag, search_path(:search => tag), method: :post %>
+      <% end %>
     </div>
+
+    <% event.comments.each do |comment| %>
+      <div class="comment">
+        <div class="comment-user-name">
+          <b><%= comment.user.user_name %></b>
+          <%= comment.content %>
+          <% if current_user?(comment.user) %>
+            <%= link_to "delete", event_comment_path(event, comment), method: :delete, data: { confirm: "Are you sure?" } %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="comment-form">
+      <%= form_for [event, event.comments.new] do |f| %>
+        <%= f.text_field :content, placeholder: 'Add a comment...', :class => "comment-input" %>
+        <% end %>
+    </div>
+
     <% if current_user?(event.user) %>
-      <p>
+      <div class="edit-link">
         <%= link_to "edit", edit_event_path(event) %> |
         <%= link_to "delete", event, method: :delete, confirm: "You sure?" %>
-      </p>
+      </div>
     <% else %>
       <% if current_user.guest?(event) %>
         <%= form_for(current_user.invite_relationships.find_by(event_id: event.id),
                  html: { method: :delete }) do |f| %>
-            <%= f.submit "Leave", class: "btn" %>
+            <%= f.submit "Leave", class: "btn join-btn" %>
         <% end %>
       <% else %>
         <%= form_for(current_user.invite_relationships.build) do |f| %>
           <div><%= hidden_field_tag :event_id, event.id %></div>
-          <%= f.submit "Join", class: "btn btn-primary" %>
+          <%= f.submit "Join", class: "btn btn-primary join-btn" %>
         <% end %>
       <% end %>
     <% end %>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="attending-modal-<%= event.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><%= "#{pluralize(event.guests.count, 'Guest')}" %></h4>
+      </div>
+      <div class="modal-body">
+        <% event.guests.each do |user| %>
+          <%= render 'shared/user_info', :user => user %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>

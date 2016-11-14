@@ -1,13 +1,19 @@
 class Event < ApplicationRecord
   belongs_to :user
   #location is geocoded
+
+  has_attached_file :picture, styles: { :large => '640x400#' }
+  validates_attachment_content_type :picture, content_type: /\Aimage\/.*\z/
   geocoded_by :location
   after_validation :geocode
 
   has_many :guest_relationships, class_name: "Invite",
                                   foreign_key: "event_id",
                                   dependent: :destroy
+
   has_many :guests, through: :guest_relationships
+
+  has_many :comments, dependent: :destroy
 
   default_scope -> { order(created_at: :desc)}
   validates :title,  presence: true, length: { maximum: 20 }
@@ -16,7 +22,7 @@ class Event < ApplicationRecord
   validates :location, presence: true
   acts_as_taggable_on :tags
 
-
+  has_many :likes
 
 
   def self.from_users_followed_by(user)

@@ -1,26 +1,28 @@
-<% provide(:title, 'Sign up') %>
-<h1>Sign up</h1>
+<div class="form-wrapper">
+  <h1>Sign up</h1>
+  <%= simple_form_for @user, html: { class: 'form-horizontal', multipart: true } do |f| %>
+    <div class="form-group">
+      <%= f.input :name %>
+    </div>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages', object: @user %>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+    <div class="form-group">
+      <%= f.input :user_name %>
+    </div>
 
-      <%= f.label :user_name %>
-      <%= f.text_field :user_name %>
+    <div class="form-group">
+      <%= f.input :email %>
+    </div>
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+    <div class="form-group">
+      <%= f.input :password %>
+    </div>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %>
+    <div class="form-group">
+      <%= f.input :password_confirmation %>
+    </div>
 
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation %>
-
-      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
-    <% end %>
-  </div>
+    <div class="form-group text-center">
+      <%= f.button :submit, class: 'btn-success' %>
+    </div>
+  <% end %>
 </div>
