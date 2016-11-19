@@ -10,7 +10,10 @@ class Event < ApplicationRecord
   has_many :guest_relationships, class_name: "Invite",
                                   foreign_key: "event_id",
                                   dependent: :destroy
+
   has_many :guests, through: :guest_relationships
+
+  has_many :comments, dependent: :destroy
 
   default_scope -> { order(created_at: :desc)}
   validates :title,  presence: true, length: { maximum: 20 }
@@ -20,7 +23,6 @@ class Event < ApplicationRecord
   acts_as_taggable_on :tags
 
   has_many :likes
-
 
 
   def self.from_users_followed_by(user)
@@ -36,7 +38,7 @@ class Event < ApplicationRecord
                   relationships A INNER JOIN relationships B
                   ON A.follower_id = B.followed_id
                   WHERE A.followed_id = B.follower_id AND A.follower_id = :user_id"
-    where("user_id IN (#{friend_ids}) OR isprivate = :private OR user_id = :user_id", private: 0, user_id: user.id)
+    where("user_id IN (#{friend_ids}) OR isprivate = 0 OR user_id = :user_id", user_id: user.id)
   end
 
   def self.home_page_events(user)

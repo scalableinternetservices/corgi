@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 import sys
 import spur
@@ -12,6 +13,7 @@ testing_script = sys.argv[2]
 tsung_host = sys.argv[3]
 tsung_home_dir = "ec2-user@{0}:~".format(tsung_host)
 copy_down = False
+
 if sys.argv[4] and sys.argv[4] == "true":
 	copy_down = True
 

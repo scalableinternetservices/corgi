@@ -131,6 +131,77 @@ body {
   .user-name, .caption-content {
     display: inline;
   }
+  margin-bottom: 7px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+/* comment styling */
+.event-head {
+    flex-direction: row;
+    height: 64px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 15px;
+    color: #125688;
+    font-size: 15px;
+    line-height: 18px;
+
+    .user-name, .time-ago, .event-title {
+      display: inline;
+    }
+    .user-name {
+      font-weight: 500;
+    }
+    .event-title{
+      font-weight: 400;
+      color: black;
+    }
+    .time-ago {
+      color: #A5A7AA;
+      float: right;
+    }
+    .event-btn {
+      display: inline;
+      float: right;
+    }
+  }
+  .map {
+    border-bottom: 1px solid #eeefef;
+    border-top: 1px solid #eeefef;
+  }
+
+.event-bottom {
+  .location {
+    font-weight: 400;
+    padding-left: 15px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
+
+  .description, .tag-list, .attending, .edit-link {
+    font-weight: 300;
+    padding-left: 15px;
+    padding-bottom:10px;
+  }
+  .user-name, .comment-content {
+    display: inline;
+  }
+
+  .caption {
+    margin-bottom: 7px;
+  }
+  .user-name {
+    font-weight: 500;
+    color: #125688;
+    font-size: 15px;
+  }
+  .user-name, .caption-content {
+    display: inline;
+  }
   #comment {
     margin-top: 7px;
     .user-name {
@@ -282,6 +353,51 @@ body {
   @include box_sizing;
 }
 
+.comment-content {
+  margin-top: 13px;
+  margin-left: 15px;
+  margin-right: 2px;
+  font-size: 15px;
+  line-height: 18px;
+  width: 100%;
+  color: #4B4F54;
+}
+
+.comment-form {
+  padding-top: 20px;
+  margin-top: 13px;
+  margin-left: 15px;
+  margin-right: 2px;
+  min-height: 80px;
+  align-items: center;
+  border-outline: none;
+  border-top: 1px solid #EEEFEF;
+  flex-direction: row;
+  justify-content: center;
+
+  .comment-input{
+    width:570px;
+  }
+}
+
+.comment {
+  .comment-user-name {
+    margin-top: 13px;
+    margin-left: 15px;
+    margin-right: 2px;
+    font-size: 15px;
+    line-height: 18px;
+    width: 100%;
+    color: #4B4F54;
+  }
+  .paginator {
+    margin: 1.0em;
+    .more-comments {
+      color: #A5A7AA;
+    }
+  }
+}
+
 
 /* END CUSTOM UI */
 
@@ -416,6 +532,54 @@ span.picture {
   
   text-decoration: none;
   color: inherit;
+
+}
+
+.profile-right-shift{
+  margin-right: 40px;
+}
+
+.profile-font-weight{
+  font-weight: 600;
+}
+
+.profile-font-light{
+  font-weight: 100 !important;
+}
+
+.profile-edit-button {
+  border-color: #818488;
+  color: #818488;
+}
+
+.profile-instagram-position{
+    background-repeat: no-repeat;
+    background-position: -308px -37px;
+    height: 44px;
+    width: 44px;
+}
+
+.profile-padding{
+  padding-top: 15px;
+}
+
+/* notification styling */
+
+.notification-dropdown {
+  margin-top: 10px;
+  button {
+    border: none;
+  }
+}
+
+.notification-index-list {
+  margin-top: 0em;
+  list-style: none;
+  li {
+    margin-top: 1em;
+    background-color: white;
+    padding: 1em;
+  }
 
 }
 

@@ -7,6 +7,7 @@ class RelationshipsController < ApplicationController
 	    	flash[:error] = "Can't follow yourself!"
 	    	redirect_to root_path
 	    elsif current_user.follow(@user)
+	      create_notification(@user)
 	      respond_to do |format|
 	        format.html { redirect_to profile_path(@user) }
 	        format.js
@@ -26,4 +27,13 @@ class RelationshipsController < ApplicationController
 	      end
 	    end
   	end
+
+
+  	private
+  		def create_notification(user)
+    		Notification.create(user_id: user.id,
+                        notified_by_id: current_user.id,
+                        event_id: nil,
+                        notice_type: Notification.notice_types[:follow])
+  		end
 end

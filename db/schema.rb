@@ -12,6 +12,16 @@
 
 ActiveRecord::Schema.define(version: 20161103063112) do
 
+  create_table "comments", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_comments_on_event_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "events", force: :cascade do |t|
     t.datetime "date"
     t.text     "location"
@@ -49,6 +59,19 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_likes_on_event_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "notified_by_id"
+    t.integer  "event_id"
+    t.integer  "notice_type"
+    t.boolean  "read",           default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.index ["notified_by_id"], name: "index_notifications_on_notified_by_id"
+    t.index ["user_id", "notified_by_id", "event_id"], name: "index_notifications_on_user_id_and_notified_by_id_and_event_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
