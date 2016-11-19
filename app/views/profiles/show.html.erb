@@ -1,5 +1,5 @@
-<% cache(cache_key_for_profile(user)) do %>
 <div class="events-wrapper">
+ <% cache(cache_key_for_profile(@user)) do %>
   <div class="row events-header">
     <div class="col-md-6">
       <div class="img-circle">
@@ -51,7 +51,6 @@
       </div>
     </div>
   </div>
-
 	<hr>
   <% end %>
 

@@ -12,4 +12,8 @@ module NotificationsHelper
   	 	return "#{notification.notified_by.user_name} has commented on your event #{event.title}"
   	 end
 	end
+
+  def cache_key_for_notification(notification)
+    "notification-#{notification.id}-#{notification.updated_at}"
+  end
 end

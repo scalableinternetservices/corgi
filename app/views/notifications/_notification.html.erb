@@ -1,3 +1,5 @@
+<% cache(cache_key_for_notification(notification)) do %>
 <li>
   <%= link_to notification_message(notification), link_through_path(notification) %>
 </li>
+<% end %>

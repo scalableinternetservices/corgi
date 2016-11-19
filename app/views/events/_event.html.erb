@@ -17,7 +17,9 @@
       <div class="carousel-inner" role="listbox">
         <div class="carousel-item item active">
           <div class="carousel-caption map" alt="First Slide">
+            <% cache(cache_key_for_event_map(event)) do %>
             <%= map_image(event) %>
+            <% end %>
           </div>
         </div>
         <div class="carousel-item item">
@@ -37,7 +39,9 @@
     </div>
   <% else %>
     <div class="map center-block">
-    <%= map_image(event) %>
+      <% cache(cache_key_for_event_map(event)) do %>
+      <%= map_image(event) %>
+      <% end %>
     </div>
   <% end %>
   <div class="event-bottom">
@@ -68,6 +72,7 @@
     </div>
 
     <% event.comments.each do |comment| %>
+      <% cache(cache_key_for_comment(comment)) do %>
       <div class="comment">
         <div class="comment-user-name">
           <b><%= comment.user.user_name %></b>
@@ -77,6 +82,7 @@
           <% end %>
         </div>
       </div>
+      <% end %>
     <% end %>
 
     <div class="comment-form">

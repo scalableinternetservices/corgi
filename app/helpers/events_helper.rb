@@ -14,18 +14,22 @@ module EventsHelper
   def cache_key_for_event(event)
     if event.guests.count > 0
       newest_relationship = Invite.where(:event_id => event.id).maximum(:created_at)
-      "event-#{event.id}-#{event.updated_at}-#{event.guests.count}-#{newest_relationship}"
+      "event-#{event.id}-#{event.updated_at}-comments#{event.comments.count}-guests#{event.guests.count}-#{newest_relationship}"
     else
-      "event-#{event.id}-#{event.updated_at}-#{event.guests.count}"
+      "event-#{event.id}-#{event.updated_at}-comments#{event.comments.count}"
     end
   end
 
   def cache_key_for_event_info(event)
     if event.guests.count > 0
       newest_relationship = Invite.where(:event_id => event.id).maximum(:created_at)
-      "event-info-#{event.id}-#{event.updated_at}-#{event.guests.count}-#{newest_relationship}"
+      "event-info-#{event.id}-#{event.updated_at}-guests#{event.guests.count}-#{newest_relationship}"
     else
-      "event-info-#{event.id}-#{event.updated_at}-#{event.guests.count}"
+      "event-info-#{event.id}-#{event.updated_at}"
     end
+  end
+
+  def cache_key_for_event_map(event)
+    "event-map-#{event.id}-#{event.location}"
   end
 end
