@@ -6,7 +6,7 @@
 	</clients>
 
 	<servers>
-		<server host="HOSTNAME_OR_IP_OF_APP_SERVER" port="80" type="tcp"/>
+		<server host="HOST_NAME_OR_IP" port="80" type="tcp"/>
 	</servers>
 
 	<load>
@@ -22,25 +22,45 @@
 		<!-- end simple testing -->
 
 		<!-- complex testing -->
-		<!-- phase 1: 30 secs, 1 user per sec -->
-		<!-- <arrivalphase phase="1" duration="30" unit="second">
+		<!-- phase 1: 45 secs, 1 user per sec -->
+		<arrivalphase phase="1" duration="60" unit="second">
 			<users arrivalrate="1" unit="second"></users>
-		</arrivalphase> -->
+		</arrivalphase>
 
-		<!-- phase 2: 30 secs, 2 users per sec -->
-		<!-- <arrivalphase phase="2" duration="30" unit="second">
+		<!-- phase 2: 60 secs, 1.5 users per sec -->
+		<arrivalphase phase="2" duration="60" unit="second">
+			<users arrivalrate="1.5" unit="second"></users>
+		</arrivalphase>
+
+		<!-- phase 3: 60 secs, 2 users per sec -->
+		<arrivalphase phase="3" duration="60" unit="second">
 			<users arrivalrate="2" unit="second"></users>
-		</arrivalphase> -->
-
-		<!-- phase 3: 30 secs, 4 users per sec -->
-		<!-- <arrivalphase phase="3" duration="30" unit="second">
-			<users arrivalrate="4" unit="second"></users>
-		</arrivalphase> -->
+		</arrivalphase>
 		
-		<!-- phase 4: 30 secs, 8 users per sec -->
-		<!-- <arrivalphase phase="4" duration="30" unit="second">
-			<users arrivalrate="8" unit="second"></users>
-		</arrivalphase> -->
+		<!-- phase 4: 60 secs, 4 users per sec -->
+		<arrivalphase phase="4" duration="60" unit="second">
+			<users arrivalrate="4" unit="second"></users>
+		</arrivalphase>
+
+		<!-- phase 5: 60 secs, 6 users per sec -->
+		<arrivalphase phase="5" duration="60" unit="second">
+			<users arrivalrate="6" unit="second"></users>
+		</arrivalphase>
+
+		<!-- phase 6: 60 secs, 10 users per sec -->
+		<arrivalphase phase="6" duration="60" unit="second">
+			<users arrivalrate="10" unit="second"></users>
+		</arrivalphase>
+
+		<!-- phase 7: 60 secs, 16 users per sec -->
+		<arrivalphase phase="7" duration="60" unit="second">
+			<users arrivalrate="16" unit="second"></users>
+		</arrivalphase>
+		
+		<!-- phase 8: 60 secs, 20 users per sec -->
+		<arrivalphase phase="8" duration="60" unit="second">
+			<users arrivalrate="20" unit="second"></users>
+		</arrivalphase>
 		<!-- end complex testing -->
 	</load>
 
@@ -53,7 +73,226 @@
 	</options>
 
 	<sessions>
-		<session name="user-test-1" probability="100" type="ts_http">
+		<session name="new-user" probability="50" type="ts_http">
+			<!-- setup some random variables -->
+	      	<setdynvars sourcetype="random_string" length="6">
+	        	<var name="new_user_name" />
+	      	</setdynvars>
+	      	<thinktime value="2" random="true"></thinktime>
+
+			<!-- get the root route -->
+			<request>
+				<http url="/" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get signup page -->
+			<request>
+				<http url="/signup" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- signup new user -->
+			<request subst="true">
+				<http url="/users"
+					version="1.1"
+					method="POST"
+					contents="user%5Bname%5D=%%_new_user_name%%&amp;
+							user%5Buser_name%5D=%%_new_user_name%%&amp;
+							user%5Bemail%5D=%%_new_user_name%%@gmail.com&amp;
+							user%5Bpassword%5D=password&amp;
+							user%5Bpassword_confirmation%5D=password&amp;
+							commit=Create+User"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<request subst="true">
+				<http url="/%%_new_user_name%%/edit" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- edit background in profile -->
+			<request subst="true">
+				<http url="/%%_new_user_name%%/edit" 
+					version="1.1" 
+					method="PATCH" 
+					contents="user%5Bbackground%5D=random%20background&amp;
+						commit=Update+Profile"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+
+			<!-- follow 2 users -->
+			<setdynvars sourcetype="random_number" start="1" end="20">
+	        	<var name="rand1" />
+	        	<var name="rand2" />
+	      	</setdynvars>
+	      	<thinktime value="2" random="true"></thinktime>
+
+			<!-- follow random user 1 -->
+			<request subst="true">
+				<http url="/user%%_rand1%%/follow_user" 
+					version="1.1" 
+					method="POST"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get random user 1s home page -->
+			<request subst="true">
+				<http url="/user%%_rand1%%" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- follow random user 2 -->
+			<request subst="true">
+				<http url="/user%%_rand2%%/follow_user" 
+					version="1.1" 
+					method="POST"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get random user 2s home page -->
+			<request subst="true">
+				<http url="/user%%_rand2%%" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get the explore page -->
+			<request>
+				<http url="/explore" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get the home page -->
+			<request>
+				<http url="/" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<request>
+				<http url="/signout" version="1.1" method="DELETE"/>
+			</request>
+		</session>
+
+
+		<!-- new event session -->
+		<session name="new_event" probability="50" type="ts_http">
+			<!-- setup some random variables -->
+	      	<setdynvars sourcetype="random_number" start="1" end="20">
+	        	<var name="rand_user" />
+	      	</setdynvars>
+	      	<thinktime value="2" random="true"></thinktime>
+
+			<!-- get signin page -->
+			<request>
+				<http url="/signin" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- signin random user -->
+			<request subst="true">
+				<http url="/signin"
+					version="1.1"
+					method="POST"
+					contents="session%5Buser_name%5D=user%%_rand_user%%&amp;
+							session%5Bpassword%5D=password&amp;
+							session%5Bremember_me%5D=0&amp;
+							commit=Sign+In"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get new event form -->
+			<request>
+				<http url="/events/new" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- create an event -->
+			<!-- for date
+				2i = month
+				3i = day
+				1i = year
+				4i = hour (24 hr clock)
+				5i = mins
+			!-->
+			<request>
+				<dyn_variable name="created_event_url" re="[Ll]ocation: (http://.*)\r"/>
+				<dyn_variable name="created_event_id" re="[Ll]ocation: http://.*/events/(.*)\r"/>
+				<http url="/events" 
+					version="1.1"
+					method="POST"
+					contents="event%5Btitle%5D=christmas&amp;
+						event%5Bdate%282i%29%5D=12&amp;
+						event%5Bdate%283i%29%5D=25&amp;
+						event%5Bdate%281i%29%5D=2016&amp;
+						event%5Bdate%284i%29%5D=6&amp;
+						event%5Bdate%285i%29%5D=30&amp;
+						event%5Blocation%5D=north%20pole&amp;
+						commit=Create+Event" />
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- join created event -->
+			<!-- <request subst="true">
+				<http url="/invites"
+					version="1.1"
+					method="POST"
+					contents="event_id=%%_created_event_id%%&amp;
+							commit=Join"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime> -->
+
+			<!-- like created event -->
+			<request subst="true">
+				<http url="/events/%%_created_event_id%%/like"
+					version="1.1"
+					method="POST"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get edit page for event -->
+			<request subst="true">
+				<http url="/events/%%_created_event_id%%/edit" 
+					version="1.1"
+					method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- edit event -->
+			<request subst="true">
+				<http url="/events/%%_created_event_id%%" 
+					version="1.1"
+					method="PATCH"
+					contents="event%5Bdescription%5D=a%20%23christmas%20party&amp;
+						commit=Update+Event" />
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- comment on created event -->
+			<request subst="true">
+				<http url="/events/%%_created_event_id%%/comments"
+					version="1.1"
+					method="POST"
+					contents="comment%5Bcontent%5D=helooooo&amp;
+							commit=Comment"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get notifications page -->
+			<request>
+				<http url="/notifications" version="1.1" method="GET"/>
+			</request>
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- sign out -->
+			<request>
+				<http url="/signout" version="1.1" method="DELETE"/>
+			</request>
+		</session>
+
+
+		<!-- original user-test session -->
+		<session name="user-test-1" probability="0" type="ts_http">
 			<!-- setup some random variables -->
 	      	<setdynvars sourcetype="random_string" length="6">
 	        	<var name="new_user_name" />
@@ -87,13 +326,6 @@
 			</request>
 
 			<thinktime value="2" random="true"></thinktime>
-
-			<!-- logout -->
-
-
-			<!-- login -->
-			<!-- <http url="/signin" version="1.1" method="GET"/> -->
-
 
 			<!-- edit background in profile -->
 			<request subst="true">
@@ -162,25 +394,80 @@
 
 			<thinktime value="2" random="true"></thinktime>
 
+			<!-- comment on created event -->
+
+			<!-- like created event -->
+
+			<!-- join created event -->
+
+
+
 			<!-- follow user1 (first result) -->
-			<request subst="true">
+			<!-- <request subst="true">
 				<http url="/user1/follow_user" 
 					version="1.1" 
 					method="POST"/>
 			</request>
 
-			<thinktime value="2" random="true"></thinktime>
+			<thinktime value="2" random="true"></thinktime> -->
 
 			<!-- go to user1's profile -->
-			<request>
+			<!-- <request>
 				<http url="/user1" version="1.1" method="GET"/>
 			</request>
 
-			<thinktime value="2" random="true"></thinktime>
+			<thinktime value="2" random="true"></thinktime> -->
 
 			<!-- join 2 of his events -->
 
 			<!-- leave one of them -->
+
+
+			<!-- follow 2 users -->
+			<setdynvars sourcetype="random_number" start="1" end="20">
+	        	<var name="rand1" />
+	        	<var name="rand2" />
+	      	</setdynvars>
+
+	      	<thinktime value="2" random="true"></thinktime>
+
+			<!-- follow random user 1 -->
+			<request subst="true">
+				<http url="/user%%_rand1%%/follow_user" 
+					version="1.1" 
+					method="POST"/>
+			</request>
+
+			<!-- get random user 1s home page -->
+			<request subst="true">
+				<http url="/user%%_rand1%%" version="1.1" method="GET"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- follow random user 2 -->
+			<request subst="true">
+				<http url="/user%%_rand2%%/follow_user" 
+					version="1.1" 
+					method="POST"/>
+			</request>
+
+			<!-- get random user 2s home page -->
+			<request subst="true">
+				<http url="/user%%_rand2%%" version="1.1" method="GET"/>
+			</request>
+
+			<thinktime value="2" random="true"></thinktime>
+
+			<!-- get the explore page -->
+			<request>
+				<http url="/explore" version="1.1" method="GET"/>
+			</request>
+
+			<!-- get the home page -->
+			<request>
+				<http url="/" version="1.1" method="GET"/>
+			</request>
 
 			<!-- sign out -->
 			<request>
