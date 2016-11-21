@@ -6,12 +6,19 @@ class ProfilesController < ApplicationController
       @user = User.find_by(user_name: params[:user_name])
       if @user
         if current_user?(@user) || current_user.is_friend?(@user)
-          @events = User.find_by(user_name: params[:user_name]).events.order('created_at DESC')
+          @events = User.find_by(user_name: params[:user_name]).events.order('updated_at DESC')
         else
-          @events = User.find_by(user_name: params[:user_name]).events.where("isprivate = 0").order('created_at DESC')
+          @events = User.find_by(user_name: params[:user_name]).events.where("isprivate = 0").order('updated_at DESC')
         end
-        # will 'follow' change the user's updated_at??
-        fresh_when last_modified: [@user.updated_at.utc, @events.maximum(:updated_at)].max, etag: [@user, @events.first]
+        # 'follow' action doesn't change the user's updated_at
+        @newest_relationship = Relationship.where('follower_id = :user_id OR follower_id = :user_id', user_id: @user.id).order('updated_at DESC').first
+        if @newest_relationship 
+          fresh_when last_modified: [@user.updated_at.utc, @events.maximum(:updated_at), @newest_relationship.updated_at].max, etag: [@user, @events.first, @newest_relationship]
+        elsif not @events.size == 0
+          fresh_when last_modified: [@user.updated_at.utc, @events.maximum(:updated_at)].max, etag: [@user, @events.first, @newest_relationship]
+        else 
+          fresh_when last_modified: @user.updated_at.utc, etag: @user
+        end
       else
         redirect_to root_path
       end
@@ -19,6 +26,7 @@ class ProfilesController < ApplicationController
 
     def edit
       @user = User.find_by(user_name: params[:user_name])
+      fresh_when last_modified: @user.updated_at.utc, etag: @user
     end
 
     def update
