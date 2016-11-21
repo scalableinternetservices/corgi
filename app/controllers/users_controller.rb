@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
 	def new
 		@user = User.new
+		expires_in 5.hour, :public => true
 	end
 
 	def create
@@ -19,6 +20,7 @@ class UsersController < ApplicationController
 
 	def edit
 		@user = User.find(params[:id])
+		fresh_when last_modified: @user.updated_at.utc, etag: @user
 	end
 
 	def update

@@ -12,13 +12,18 @@ class ProfilesController < ApplicationController
         end
         # 'follow' action doesn't change the user's updated_at
         @newest_relationship = Relationship.where('follower_id = :user_id OR follower_id = :user_id', user_id: @user.id).order('updated_at DESC').first
-        if @newest_relationship 
-          fresh_when last_modified: [@user.updated_at.utc, @events.maximum(:updated_at), @newest_relationship.updated_at].max, etag: [@user, @events.first, @newest_relationship]
-        elsif not @events.size == 0
-          fresh_when last_modified: [@user.updated_at.utc, @events.maximum(:updated_at)].max, etag: [@user, @events.first, @newest_relationship]
+        if @newest_relationship
+          @newest_relationship_updated_at = @newest_relationship.updated_at 
         else 
-          fresh_when last_modified: @user.updated_at.utc, etag: @user
+          @newest_relationship_updated_at = Time.utc(1970, 1, 1, 0, 0, 0)
         end
+        if not @events.size == 0
+          @events_updated_at = @events.maximum(:updated_at)
+        else 
+          @events_updated_at = Time.utc(1970, 1, 1, 0, 0, 0)
+        end
+        fresh_when last_modified: [@user.updated_at.utc, @events_updated_at.utc, @newest_relationship_updated_at.utc].max, etag: [@user, @events.first, @newest_relationship]
+        
       else
         redirect_to root_path
       end

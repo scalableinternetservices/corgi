@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
 	def new
+		expires_in 5.hour, :public => true
 	end
 
 	def create

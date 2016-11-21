@@ -3,6 +3,8 @@ class PagesController < ApplicationController
   	if signed_in?
   		@event = current_user.events.build
   		@feed_items = current_user.feed
+    else 
+      expires_in 1.hour, :public => true
   	end
   end
 
