@@ -33,6 +33,7 @@ users = User.order(:created_at)
   end
 end
 
+
 # Following relationships
 users = User.all
 user  = users.first
