@@ -5,7 +5,7 @@ import spur
 import spur.ssh
 
 if (len(sys.argv) < 4):
-	print "Usage py load_testing <pem_file> <testing script> <tsung_host> <copy_down=False>"
+	print "Usage python load_testing <pem_file> <testing script> <tsung_host> <copy_down=False>"
 	exit(1)
 
 pem_file = sys.argv[1]
@@ -14,7 +14,7 @@ tsung_host = sys.argv[3]
 tsung_home_dir = "ec2-user@{0}:~".format(tsung_host)
 copy_down = False
 
-if sys.argv[4] and sys.argv[4] == "true":
+if len(sys.argv) == 5 and sys.argv[4] == "true":
 	copy_down = True
 
 local_shell = spur.LocalShell()
