@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103063112) do
+ActiveRecord::Schema.define(version: 20161122072103) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -41,6 +41,13 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.index ["title"], name: "index_events_on_title"
     t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
     t.index ["user_id"], name: "index_events_on_user_id"
+  end
+
+  create_table "exists", force: :cascade do |t|
+    t.integer  "mutex"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mutex"], name: "index_exists_on_mutex", unique: true
   end
 
   create_table "invites", force: :cascade do |t|

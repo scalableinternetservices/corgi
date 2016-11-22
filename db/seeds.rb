@@ -5,6 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+begin
+  Exist.create!(mutex: 1)
+rescue ActiveRecord::RecordInvalid
+  exit
+rescue ActiveRecord::RecordNotUnique
+  exit
+end
+
+
 20.times do |n|
   name  = "User #{n+1}"
   user_name = "user#{n+1}"

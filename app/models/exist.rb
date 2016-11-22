@@ -1,0 +1,2 @@
+class Exist < ApplicationRecord
+end
