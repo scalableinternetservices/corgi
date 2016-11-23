@@ -6,5 +6,8 @@
 	<% @feed_items.each do |feed_item| %>
 		<%= render 'events/event', :event => feed_item %>
   	<% end %>
+  	<div>
+  		<%= will_paginate @feed_items %>
+  	</div>
   <% end %>
 </div>

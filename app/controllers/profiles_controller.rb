@@ -3,12 +3,16 @@ class ProfilesController < ApplicationController
     before_action :signed_in_user
 
     def show
-      @user = User.find_by(user_name: params[:user_name])
+      @user = User.includes(:followers,:following).find_by(user_name: params[:user_name])
+      # optimization
+      # @user = User.includes(:events).find_by(user_name: params[:user_name])
       if @user
         if current_user?(@user) || current_user.is_friend?(@user)
-          @events = User.find_by(user_name: params[:user_name]).events.order('created_at DESC').includes(:user)
+          @events = Event.includes(:guests, :comments, :tags).where(:user_id => @user.id).order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
+          # @events = @user.events.order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
         else
-          @events = User.find_by(user_name: params[:user_name]).events.where("isprivate = 0").order('created_at DESC').includes(:user)
+          @events = Event.includes(:guests, :comments, :tags).where(:user_id => @user.id, :isprivate => 0).order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
+          # @events = @user.events.where(:isprivate => 0).order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
         end
       else
         redirect_to root_path

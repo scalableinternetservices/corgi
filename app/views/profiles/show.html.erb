@@ -57,6 +57,7 @@
 	<% @events.each do |event| %>
 		<%= render 'events/event', :event => event %>
 	<% end %>
+  <%= will_paginate @events %>
 </div>
 
 <!-- Modal Followers-->

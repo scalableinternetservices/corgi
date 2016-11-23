@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   def home
   	if signed_in?
   		@event = current_user.events.build
-  		@feed_items = current_user.feed
+  		@feed_items = current_user.feed.paginate(:page => params[:page], :per_page => 15)
   	end
   end
 
@@ -41,7 +41,7 @@ class PagesController < ApplicationController
           explore_event_ids += (nearby_events.map {|event| event.id})
         end
       end
-      @explore_events = Event.where(:id => explore_event_ids).distinct.includes(:user)
+      @explore_events = Event.where(:id => explore_event_ids).distinct.includes(:user).paginate(:page => params[:page], :per_page => 15)
     end
   end
 

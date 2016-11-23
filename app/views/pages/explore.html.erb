@@ -3,4 +3,5 @@
 	<% @explore_events.each do |event_item| %>
 		<%= render 'events/event', :event => event_item %>
 	<% end %>
+	<%= will_paginate @explore_events %>
 </div>
