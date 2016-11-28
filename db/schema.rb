@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161103063112) do
+ActiveRecord::Schema.define(version: 20161128204144) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -18,8 +18,6 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_comments_on_event_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -38,9 +36,7 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
     t.integer  "likes_count"
-    t.index ["title"], name: "index_events_on_title"
     t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
-    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "invites", force: :cascade do |t|
@@ -48,9 +44,6 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.integer  "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_invites_on_event_id"
-    t.index ["guest_id", "event_id"], name: "index_invites_on_guest_id_and_event_id", unique: true
-    t.index ["guest_id"], name: "index_invites_on_guest_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -69,9 +62,6 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.boolean  "read",           default: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.index ["notified_by_id"], name: "index_notifications_on_notified_by_id"
-    t.index ["user_id", "notified_by_id", "event_id"], name: "index_notifications_on_user_id_and_notified_by_id_and_event_id"
-    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -79,9 +69,6 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.integer  "followed_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["followed_id"], name: "index_relationships_on_followed_id"
-    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
-    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -122,8 +109,6 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["user_name"], name: "index_users_on_user_name", unique: true
   end
 
 end
