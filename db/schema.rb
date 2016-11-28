@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20161128204144) do
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
     t.integer  "likes_count"
-    t.index ["user_id", "date", "created_at"], name: "index_events_on_user_id_and_date_and_created_at"
   end
 
   create_table "invites", force: :cascade do |t|
@@ -51,7 +50,6 @@ ActiveRecord::Schema.define(version: 20161128204144) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_likes_on_event_id"
   end
 
   create_table "notifications", force: :cascade do |t|
