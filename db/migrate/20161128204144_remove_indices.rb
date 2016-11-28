@@ -4,7 +4,7 @@ class RemoveIndices < ActiveRecord::Migration[5.0]
   	remove_index :users, :column => :user_name
   	remove_index :events, :column => :title
   	remove_index :events, :column => :user_id
-  	remove_index :events, :name => "index_events_on_user_id_and_date_and_created_at"
+  	# remove_index :events, :name => "index_events_on_user_id_and_date_and_created_at"
   	remove_index :invites, :column => :event_id
   	remove_index :invites, :column => :guest_id
   	remove_index :invites, :name => "index_invites_on_guest_id_and_event_id"
