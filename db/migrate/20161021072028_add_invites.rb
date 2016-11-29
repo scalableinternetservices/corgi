@@ -6,8 +6,8 @@ class AddInvites < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_index :invites, :guest_id
-    add_index :invites, :event_id
-    add_index :invites, [:guest_id, :event_id], unique: true
+    # add_index :invites, :guest_id
+    # add_index :invites, :event_id
+    # add_index :invites, [:guest_id, :event_id], unique: true
   end
 end
