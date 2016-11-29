@@ -31,8 +31,10 @@ class PagesController < ApplicationController
       explore_event_ids += events_can_be_seen.unscoped.order(likes_count: :desc).where.not(:user_id => current_user.id).ids.first(10)
 
       # @events_with_same_tags: the events with same tags as current_user
-      current_user.events.each do |event|
-        explore_event_ids += Event.tagged_with(event.tag_list, :any => true).where.not(:user_id => event.user.id).ids
+      current_user_events = Event.includes(:tags).where(:user_id => current_user.id)
+      current_user_events.each do |event|
+
+        explore_event_ids += Event.tagged_with(event.tags.map{|tag| tag.name}, :any => true).where.not(:user_id => event.user.id).ids
       end
 
       current_user.events.where(:created_at => 3.days.ago..Time.now).each do |event|
@@ -41,7 +43,7 @@ class PagesController < ApplicationController
           explore_event_ids += (nearby_events.map {|event| event.id})
         end
       end
-      @explore_events = Event.where(:id => explore_event_ids).distinct.includes(:user).paginate(:page => params[:page], :per_page => 15)
+      @explore_events = Event.includes(:user,:guests,:comments,:tags).where(:id => explore_event_ids).distinct.paginate(:page => params[:page], :per_page => 15)
     end
   end
 

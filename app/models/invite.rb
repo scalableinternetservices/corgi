@@ -1,6 +1,6 @@
 class Invite < ApplicationRecord
 	belongs_to :guest, class_name: 'User'
-	belongs_to :event, class_name: 'Event'
+	belongs_to :event, class_name: 'Event', counter_cache: true
  	validates :guest_id, presence: true
 	validates :event_id, presence: true
 end
