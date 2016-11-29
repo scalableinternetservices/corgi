@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_comments_on_event_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -36,6 +38,7 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
     t.integer  "likes_count"
+    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "invites", force: :cascade do |t|
@@ -60,6 +63,8 @@ ActiveRecord::Schema.define(version: 20161103063112) do
     t.boolean  "read",           default: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
+    t.index ["notified_by_id"], name: "index_notifications_on_notified_by_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|

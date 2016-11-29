@@ -53,14 +53,14 @@
 		</arrivalphase>
 
 		<!-- phase 7: 60 secs, 16 users per sec -->
-		<arrivalphase phase="7" duration="60" unit="second">
+		<!-- <arrivalphase phase="7" duration="60" unit="second">
 			<users arrivalrate="16" unit="second"></users>
-		</arrivalphase>
+		</arrivalphase> -->
 		
 		<!-- phase 8: 60 secs, 20 users per sec -->
-		<arrivalphase phase="8" duration="60" unit="second">
+		<!-- <arrivalphase phase="8" duration="60" unit="second">
 			<users arrivalrate="20" unit="second"></users>
-		</arrivalphase>
+		</arrivalphase> -->
 		<!-- end complex testing -->
 	</load>
 
